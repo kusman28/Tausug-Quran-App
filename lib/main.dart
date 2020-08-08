@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Tausug Tafseer',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.lightGreen,
         primaryColor: Color(hexColor('#216353')),
       ),
     home: Homepage(),

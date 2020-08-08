@@ -2,41 +2,50 @@
 // O' Tuhan namu papag-barakata kamu in Application ini
 // sarta tarbilanga kami dayng ha mga Mukhliseen. Ameen
 import 'package:flutter/material.dart';
+import 'package:tausug_tafseer/models/Surah.dart';
+import 'package:tausug_tafseer/widgets/CardSurah.dart';
+import 'package:tausug_tafseer/controllers/Surah.dart';
+import 'package:pk_skeleton/pk_skeleton.dart';
 
-class Surah extends StatefulWidget {
+class MgaSurah extends StatefulWidget {
   @override
-  _SurahState createState() => _SurahState();
+  _MgaSurahState createState() => _MgaSurahState();
 }
 
-class _SurahState extends State<Surah> {
+class _MgaSurahState extends State<MgaSurah> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Container(
-        margin: EdgeInsets.only(top: 100),
-        child: Column(
-          children: <Widget>[
-            Text(
-              "Coming Soon...",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.normal,
-                fontSize: 25,
-              ),
-              // textAlign: TextAlign.center,
-            ),
-            Text(
-              "In shaa Allah",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-              ),
-              // textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
+    return FutureBuilder<List<Surah>>(
+      future: ServiceData().loadSurah(),
+      builder: (c, snapshot) {
+        return snapshot.hasData
+            ? ListView(
+                physics: ScrollPhysics(),
+                shrinkWrap: true,
+                children: snapshot.data
+                    .map((data) => CardSurah(
+                          title: data.latin,
+                          subtitle: data.translation,
+                          surahImage: data.image,
+                          surah: data.index.toString(),
+                          ayah: data.ayahCount.toString(),
+                          arabic: data.arabic.toString(),
+                          // onTap: () {
+                          //   Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //           builder: (context) => DetailSurah(
+                          //               detail: data.latin,
+                          //               index: data.index)));
+                          // },
+                        ))
+                    .toList())
+            : PKCardListSkeleton(
+                isCircularImage: true,
+                isBottomLinesActive: true,
+                length: 10,
+              );
+      },
     );
   }
 }
