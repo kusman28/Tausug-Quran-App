@@ -3,6 +3,7 @@
 // sarta tarbilanga kami dayng ha mga Mukhliseen. Ameen
 import 'package:flutter/material.dart';
 import 'package:tausug_tafseer/models/Surah.dart';
+import 'package:tausug_tafseer/pages/SurahTafseer.dart';
 import 'package:tausug_tafseer/widgets/CardSurah.dart';
 import 'package:tausug_tafseer/controllers/Surah.dart';
 import 'package:pk_skeleton/pk_skeleton.dart';
@@ -30,14 +31,14 @@ class _MgaSurahState extends State<MgaSurah> {
                           surah: data.index.toString(),
                           ayah: data.ayahCount.toString(),
                           arabic: data.arabic.toString(),
-                          // onTap: () {
-                          //   Navigator.push(
-                          //       context,
-                          //       MaterialPageRoute(
-                          //           builder: (context) => DetailSurah(
-                          //               detail: data.latin,
-                          //               index: data.index)));
-                          // },
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SurahTafseer(
+                                        detail: data.latin,
+                                        index: data.index)));
+                          },
                         ))
                     .toList())
             : PKCardListSkeleton(

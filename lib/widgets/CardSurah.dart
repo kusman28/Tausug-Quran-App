@@ -26,6 +26,7 @@ class CardSurah extends StatelessWidget {
             return Column(
               children: <Widget>[
                 ListTile(
+                  onTap: onTap,
                   contentPadding: EdgeInsets.fromLTRB(13, 3, 13, 3),
                   title: new Text(subtitle, style: TextStyle(color: Color(hexColor('#216353'))),),
                   leading: CircleAvatar(

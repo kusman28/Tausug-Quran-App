@@ -4,8 +4,12 @@
 import 'package:flutter/material.dart';
 import 'package:tausug_tafseer/pages/TopBarNavigation.dart';
 import 'package:tausug_tafseer/style/Hex.dart';
+import 'package:provider/provider.dart';
+import 'package:tausug_tafseer/style/UI.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MultiProvider(providers: [
+      ChangeNotifierProvider(create: (_) => UI()),
+    ], child: MyApp()));
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -18,7 +22,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.lightGreen,
         primaryColor: Color(hexColor('#216353')),
       ),
-    home: Homepage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => Homepage(),
+      },
     );
   }
 }
