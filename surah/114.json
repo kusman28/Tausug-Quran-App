@@ -1,0 +1,29 @@
+{
+    "114": {
+        "number": "114",
+        "name": "الناس",
+        "name_latin": "An-Nas",
+        "number_of_ayah": "6",
+        "text": {
+            "1": "قُلْ اَعُوْذُ بِرَبِّ النَّاسِۙ",
+            "2": "مَلِكِ النَّاسِۙ",
+            "3": "اِلٰهِ النَّاسِۙ",
+            "4": "مِنْ شَرِّ الْوَسْوَاسِ ەۙ الْخَنَّاسِۖ",
+            "5": "الَّذِيْ يُوَسْوِسُ فِيْ صُدُوْرِ النَّاسِۙ",
+            "6": "مِنَ الْجِنَّةِ وَالنَّاسِ ࣖ "
+        },
+        "translations": {
+            "id": {
+                "name": "Manusiya",
+                "text": {
+                    "1": "Iyan kaw (Ya Muhammad (sallallahu alayhi wasallam)) magpatilibun aku pa Tuhan Tag-amulahi ha manusiya iban Maghihidjatul sin pakaradjaan nila.",
+                    "2": "Tuhan Tag-milik ha manusiya Magpaintul sin kahalan nila; ha Pag-milik Sampurna.",
+                    "3": "Tuhan susumbahun sin manusiya Sampurna in Kawasa Magdul baya.",
+                    "4": "Dayin ha kangian sin saytan khannas maghuhubat ha manusiya, amuin humundung siya similu apabila kaw mikitulung ha Allahu ta'ala.",
+                    "5": "Amuin manghuhubat pa daghal (pa atay) sin manusiya. ",
+                    "6": "Dayin sila yan ha pihak jin iban manusiya."
+                }
+            }
+        }
+    }
+}

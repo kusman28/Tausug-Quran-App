@@ -1,0 +1,31 @@
+{
+    "107": {
+        "number": "107",
+        "name": "الماعون",
+        "name_latin": "Al-Ma'un",
+        "number_of_ayah": "7",
+        "text": {
+            "1": "اَرَءَيْتَ الَّذِيْ يُكَذِّبُ بِالدِّيْنِۗ",
+            "2": "فَذٰلِكَ الَّذِيْ يَدُعُّ الْيَتِيْمَۙ",
+            "3": "وَلَا يَحُضُّ عَلٰى طَعَامِ الْمِسْكِيْنِۗ",
+            "4": "فَوَيْلٌ لِّلْمُصَلِّيْنَۙ",
+            "5": "الَّذِيْنَ هُمْ عَنْ صَلَاتِهِمْ سَاهُوْنَۙ",
+            "6": "الَّذِيْنَ هُمْ يُرَاۤءُوْنَۙ",
+            "7": "وَيَمْنَعُوْنَ الْمَاعُوْنَ ࣖ"
+        },
+        "translations": {
+            "id": {
+                "name": "Paltabangan Asibi, Tanda Kasi",
+                "text": {
+                    "1": "Unu, kiya-ingatan mu ra ka sali mu ra sin kita in tau amuin manghimuting sin pag-dihil tungbas iban pag-hisab ha adlaw Akhirat?!",
+                    "2": "Bang kaw mabaya umingat kaniya yan amuna sa yan in tau hipagtulak niya in manga anak ilu sin tulak kahukaw iban lungkupan iban laugan.",
+                    "3": "Iban di siya magpamituwa mang-daak manangag kakaun ha manga miskin.",
+                    "4": "Na kamulahan in kumugdan ha manga tau magsasambahayang amuin nag-sisipat sin biya ha yan.",
+                    "5": "Amuin manga sila in sambahayang nila pahil-pahil.",
+                    "6": "In manga sila yan amuna in manga magpakita-kita sadja ha Manusiya sin pag-ammal nila.",
+                    "7": "Di sila magpangdihil sin karayawan duun kanila iban sin tatabangan nila manusiya."
+                }
+            }
+        }
+    }
+}

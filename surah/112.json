@@ -1,0 +1,25 @@
+{
+    "112": {
+        "number": "112",
+        "name": "الاخلاص",
+        "name_latin": "Al-Ikhlas",
+        "number_of_ayah": "4",
+        "text": {
+            "1": "قُلْ هُوَ اللّٰهُ اَحَدٌۚ",
+            "2": "اَللّٰهُ الصَّمَدُۚ",
+            "3": "لَمْ يَلِدْ وَلَمْ يُوْلَدْۙ",
+            "4": "وَلَمْ يَكُنْ لَّهٗ كُفُوًا اَحَدٌ ࣖ"
+        },
+        "translations": {
+            "id": {
+                "name": "Ikhlas",
+                "text": {
+                    "1": "Iyana, Baytai (Ya Muhammad (sallallahu alayhi wasallam)) in manga tau imungsit imasubu kaymu; amun agi kaymu: Papatahan in Tuhan mu? Iyana, lawng mu: Siya na in Allahu ta'ala Tunggal, Isa-isa niya way sakutu niya.",
+                    "2": "In Allahu ta'la, Mamaksurun, Huhulat-hulatun, Pangangayu-ngayuan, Hahajatun.",
+                    "3": "Di siya mag-anak, iban wala siya piyag-anak.",
+                    "4": "Iban wayru'un sibu agiad niya hambu'uk unu-unu."
+                }
+            }
+        }
+    }
+}
