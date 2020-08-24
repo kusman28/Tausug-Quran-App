@@ -103,15 +103,14 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                 children: <Widget>[
                                 IconButton(icon: new Icon(Icons.content_copy), 
                                 onPressed: () {
-                                  Clipboard.setData(new ClipboardData(text: '${snapshot.data.text[key]}' + '\n \n' '${snapshot.data.translations.id.text[key]}'));
+                                  Clipboard.setData(new ClipboardData(text: '${snapshot.data.text[key]}' + '\n \n' '${snapshot.data.translations.id.text[key]}' + '\n \n' '[${snapshot.data.nameLatin}' + ' - ' '${snapshot.data.text.keys.elementAt(i)}]'));
                                   _scaffoldKey.currentState.showSnackBar(SnackBar
                                   (content: Text('Tafseer Copied'),
                                   backgroundColor: Color(hexColor('#216353')),
                                   ));
-                                  // Scaffold.of(context).showSnackBar(SnackBar
-                                  // (content: Text('text copied')));
                                 }),
-                                Icon(Icons.bookmark_border)
+                                Text('|', style: TextStyle(color: Colors.grey),),
+                                IconButton(icon: new Icon(Icons.bookmark_border), onPressed: () {  },),
                                 ],
                               ),
                           ],
