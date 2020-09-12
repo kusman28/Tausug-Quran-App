@@ -24,8 +24,8 @@ class _SurahTafseerState extends State<SurahTafseer> {
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     var ui = Provider.of<UI>(context);
     return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
+        key: _scaffoldKey,
+        appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.keyboard_backspace),
             onPressed: () => Navigator.of(context).pop(),
@@ -50,8 +50,8 @@ class _SurahTafseerState extends State<SurahTafseer> {
                 ? ListView.separated(
                     // physics: AlwaysScrollableScrollPhysics(),
                     separatorBuilder: (context, index) => Divider(
-                      color: Colors.grey,
-                    ),
+                          color: Colors.grey,
+                        ),
                     itemCount: snapshot.data.text.length,
                     itemBuilder: (BuildContext c, int i) {
                       String key = snapshot.data.text.keys.elementAt(i);
@@ -64,8 +64,11 @@ class _SurahTafseerState extends State<SurahTafseer> {
                               leading: CircleAvatar(
                                 foregroundColor: Color(hexColor('#216353')),
                                 backgroundColor: Colors.white54,
-                                backgroundImage: AssetImage('images/separator.png'),
-                                  child: Text(snapshot.data.text.keys.elementAt(i), style: TextStyle(fontSize: 12.0)),
+                                backgroundImage:
+                                    AssetImage('images/separator.png'),
+                                child: Text(
+                                    snapshot.data.text.keys.elementAt(i),
+                                    style: TextStyle(fontSize: 12.0)),
                               ),
                               title: SelectableText(
                                 '${snapshot.data.text[key]}',
@@ -97,29 +100,46 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                   AppStyle.spaceH10,
                                 ],
                               ),
-                              AppStyle.spaceH10,
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                IconButton(icon: new Icon(Icons.content_copy), 
-                                onPressed: () {
-                                  Clipboard.setData(new ClipboardData(text: '${snapshot.data.text[key]}' + '\n \n' '${snapshot.data.translations.id.text[key]}' + '\n \n' '[${snapshot.data.nameLatin}' + ' - ' '${snapshot.data.text.keys.elementAt(i)}]'));
-                                  _scaffoldKey.currentState.showSnackBar(SnackBar
-                                  (content: Text('Tafseer Copied'),
-                                  backgroundColor: Color(hexColor('#216353')),
-                                  ));
-                                }),
-                                Text('|', style: TextStyle(color: Colors.grey),),
-                                IconButton(icon: new Icon(Icons.bookmark_border), onPressed: () {  },),
-                                ],
-                              ),
+                            AppStyle.spaceH10,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: <Widget>[
+                                IconButton(
+                                    icon: new Icon(Icons.content_copy),
+                                    onPressed: () {
+                                      Clipboard.setData(new ClipboardData(
+                                          text: '${snapshot.data.text[key]}' +
+                                              '\n \n'
+                                                  '${snapshot.data.translations.id.text[key]}' +
+                                              '\n \n'
+                                                  '[${snapshot.data.nameLatin}' +
+                                              ' : '
+                                                  '${snapshot.data.text.keys.elementAt(i)}]' +
+                                              '\n \n' +
+                                              '#TausugTafseer'));
+                                      _scaffoldKey.currentState
+                                          .showSnackBar(SnackBar(
+                                        content: Text('Tafseer Copied'),
+                                        backgroundColor:
+                                            Color(hexColor('#216353')),
+                                      ));
+                                    }),
+                                Text(
+                                  '|',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                                IconButton(
+                                  icon: new Icon(Icons.bookmark_border),
+                                  onPressed: () {},
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       );
                     })
                 : Center(child: CircularProgressIndicator());
           },
-        )
-    );
+        ));
   }
 }
