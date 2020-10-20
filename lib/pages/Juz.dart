@@ -12,28 +12,28 @@ class _JuzState extends State<Juz> {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Container(
+      child: Container(
         margin: EdgeInsets.only(top: 100),
         child: Column(
           children: <Widget>[
-            Text(
-              "Coming Soon...",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.normal,
-                fontSize: 25,
-              ),
-              // textAlign: TextAlign.center,
-            ),
-            Text(
-              "In shaa Allah",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-              ),
-              // textAlign: TextAlign.center,
-            ),
+            // Text(
+            //   "Coming Soon...",
+            //   style: TextStyle(
+            //     color: Colors.black,
+            //     fontWeight: FontWeight.normal,
+            //     fontSize: 25,
+            //   ),
+            //   // textAlign: TextAlign.center,
+            // ),
+            // Text(
+            //   "In shaa Allah",
+            //   style: TextStyle(
+            //     color: Colors.black,
+            //     fontWeight: FontWeight.bold,
+            //     fontSize: 25,
+            //   ),
+            //   // textAlign: TextAlign.center,
+            // ),
           ],
         ),
       ),

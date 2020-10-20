@@ -28,6 +28,8 @@ class _MgaSurahState extends State<MgaSurah> {
                           title: data.latin,
                           subtitle: data.translation,
                           surahImage: data.image,
+                          basmalahImage: data.basmalah,
+                          tafsir: data.tafsir,
                           surah: data.index.toString(),
                           ayah: data.ayahCount.toString(),
                           arabic: data.arabic.toString(),
@@ -37,6 +39,8 @@ class _MgaSurahState extends State<MgaSurah> {
                                 MaterialPageRoute(
                                     builder: (context) => SurahTafseer(
                                         detail: data.latin,
+                                        basmalah: data.basmalah,
+                                        tafsir: data.tafsir,
                                         index: data.index)));
                           },
                         ))

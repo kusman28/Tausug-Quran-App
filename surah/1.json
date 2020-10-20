@@ -3,6 +3,7 @@
         "number": "1",
         "name": "الفاتحة",
         "name_latin": "Al-Fatihah",
+        "basmalah": "images/basmalah.png",
         "number_of_ayah": "7",
         "text": {
             "1": "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ",
@@ -17,13 +18,13 @@
             "id": {
                 "name": "Pangukaban",
                 "text": {
-                    "1": "Tagnaan ku “massa” ha ngan sin Allahu Ta'ala Tuhan amuin mampunyahi Rahmat dakula iban saplag pa katan Makhluq, lagi kakkal in Rahmat iban Ulung ha mga ipun niya mu'min dayin namayan ha Dunya mabut pa Akhirat.",
-                    "2": "Katan pudji tartantu pa Allahu Ta'ala Tuhan amuin namamarihala sin katan Alam.",
-                    "3": "Amuin Tuhan mampunyahi Rahmat dakula iban saplag ha katan Makhluq, lagi kakkal in Rahmat iban Ulung ha mga ipun niya mu'min, daying namayan ha dunya mabut pa Akhirat.",
-                    "4": "Amuin tagmilik, magbaya-baya ha adlaw paghisab adlaw Akhirat.",
-                    "5": "Tuput tunggal ikaw in sumbahun namu, pagtag-ipunan, iban tuput tunggal ikaw in pangayuan namu tulung-tabang.",
-                    "6": "Pandu'i kami hidayati, patattapa, lagi sunu'i in hidaya mu kamu pa dan mu kasabunnalan iban pa Agama mu mabuntul (Agama Islam).",
-                    "7": "Dan amuin natullus sin mga kiya'anughara mu duun kanila in Ni'mat karayawan, dugaing dayin ha dan natullus sin manga sila kiyadugalan mu, manga kiyamurkaan (Manga Yahudi) damikkiyan bukun amuin dan natullus sin manga sila nalalaung (Manga Nasarani)."
+                    "1": "Tagnaan ku ha ngan sin Allah, amuin Tuhan Baying-ulungun lagi Baying-kasihun.",
+                    "2": "In katan panangliti iban pamudji tuput pa Allah, Rabb (Tuhan, Tagparihala) sin katan piyapanjari.",
+                    "3": "Amuin Tuhan Baying-ulungun lagi Baying-kasihun.",
+                    "4": "Tagmilik (atawa Tagbaya) ha Adlaw paghukum.",
+                    "5": "Tuput Tunggal Ikaw ra in piyagtatag-ipunan namu, iban tuput tunggal Ikaw ra in pangayuan namu tabang.",
+                    "6": "Hidayati kami (pandui kami) pa dan mabuntul.",
+                    "7": "Dan sin manga kiya-anugharaan Mu nihmat (karayawan), bukun daying ha Dan sin manga dimarawhat sin dugal Mu, damikkiyan bukun dan sin manga nalalawung."
                 }
             }
         }

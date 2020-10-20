@@ -11,8 +11,10 @@ import 'package:tausug_tafseer/style/Style.dart';
 import 'package:tausug_tafseer/style/UI.dart';
 
 class SurahTafseer extends StatefulWidget {
-  final detail, index;
-  SurahTafseer({Key key, @required this.detail, this.index}) : super(key: key);
+  final tafsir, basmalah, detail, index;
+  SurahTafseer(
+      {Key key, @required this.tafsir, this.basmalah, this.detail, this.index})
+      : super(key: key);
 
   @override
   _SurahTafseerState createState() => _SurahTafseerState();
@@ -31,17 +33,26 @@ class _SurahTafseerState extends State<SurahTafseer> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           centerTitle: true,
-          title: Text(widget.detail),
+          title: Column(
+            children: <Widget>[
+              Text(widget.detail),
+              Text(
+                widget.tafsir,
+                style:
+                    TextStyle(fontSize: 13, color: Color(hexColor('d9e4dd'))),
+              )
+            ],
+          ),
           elevation: 0.0,
-          // actions: <Widget>[
-          //   IconButton(
-          //     icon: Icon(Icons.more_vert),
-          //     onPressed: () {
-          //       Navigator.push(context,
-          //           MaterialPageRoute(builder: (context) => Settings()));
-          //     },
-          //   )
-          // ],
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.more_vert),
+              onPressed: () {
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: (context) => Settings()));
+              },
+            )
+          ],
         ),
         body: FutureBuilder<AllSurah>(
           future: ServiceData().loadSurahTafseer(widget.index),
@@ -111,12 +122,12 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                           text: '${snapshot.data.text[key]}' +
                                               '\n \n'
                                                   '${snapshot.data.translations.id.text[key]}' +
-                                              '\n \n'
+                                              '\n'
                                                   '[${snapshot.data.nameLatin}' +
                                               ' : '
                                                   '${snapshot.data.text.keys.elementAt(i)}]' +
                                               '\n \n' +
-                                              '#TausugTafseer'));
+                                              '#TausugQuran'));
                                       _scaffoldKey.currentState
                                           .showSnackBar(SnackBar(
                                         content: Text('Tafseer Copied'),

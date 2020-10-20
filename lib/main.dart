@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Tausug Tafseer',
+      title: 'Tausug Quran',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.green,
@@ -69,24 +69,40 @@ class _SplashScreenState extends State<SplashScreen> {
                   height: 200,
                   child: Image.asset('images/logo_nav.png'),
                 ),
-                Text('Tausug Tafseer\n\n\n\n\n', style: TextStyle(
-                  color: Colors.white, 
-                  fontWeight: FontWeight.bold,
-                  fontSize: 21.0, 
-                  fontFamily: 'Arabic',),),
-                Text('Tapsilan sin', style: TextStyle(
-                  color: Colors.white, 
-                  fontSize: 18.0, 
-                  fontFamily: 'Arabic',),),
-                Text('Qur-an Mahamulliya', style: TextStyle(
-                  color: Colors.white, 
-                  fontSize: 20.0, 
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Arabic',),),
-                Text('ha Bahasa Sug', style: TextStyle(
-                  color: Colors.white, 
-                  fontSize: 18.0, 
-                  fontFamily: 'Arabic',),),
+                Text(
+                  'Tausug Quran\n\n\n\n\n',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 21.0,
+                    fontFamily: 'Arabic',
+                  ),
+                ),
+                Text(
+                  'Tafseer Maana sin',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    fontFamily: 'Arabic',
+                  ),
+                ),
+                Text(
+                  'Quran Mahamulliya',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Arabic',
+                  ),
+                ),
+                Text(
+                  'ha Bahasa Sug',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    fontFamily: 'Arabic',
+                  ),
+                ),
               ],
             ),
           ],

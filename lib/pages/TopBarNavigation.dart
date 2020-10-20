@@ -7,7 +7,6 @@ import 'package:tausug_tafseer/pages/Pangindanan.dart';
 import 'package:tausug_tafseer/pages/Surah.dart';
 
 class Homepage extends StatelessWidget {
-
   List<Widget> containers = [
     MgaSurah(),
     Juz(),
@@ -19,35 +18,34 @@ class Homepage extends StatelessWidget {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('Tausug Tafseer'),
-          leading: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Image.asset(
-              "images/logo_nav.png",
-            ),
-          ),
-           actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.more_vert,
-                color: Colors.white,
+          appBar: AppBar(
+            title: Text('Tausug Quran'),
+            leading: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Image.asset(
+                "images/logo_nav.png",
               ),
-              onPressed: () {
-                // do something
-              },
             ),
-          ],
-          bottom: TabBar(tabs: 
-            <Widget>[
-              Tab(text: 'Surah'),
-              Tab(text: 'Juz'),
-              Tab(text: 'Pangindanan'),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(
+                  Icons.more_vert,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  // do something
+                },
+              ),
             ],
+            bottom: TabBar(
+              tabs: <Widget>[
+                Tab(text: 'Surah'),
+                Tab(text: 'Juz'),
+                Tab(text: 'Pangindanan'),
+              ],
+            ),
           ),
-        ),
-        body: TabBarView(children: containers)
-      ),
+          body: TabBarView(children: containers)),
     );
   }
 }
