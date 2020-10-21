@@ -116,6 +116,15 @@ class _SurahTafseerState extends State<SurahTafseer> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
                                 IconButton(
+                                  icon: new Icon(Icons.info_outline),
+                                  onPressed: () =>
+                                      _onButtonPressed(c, snapshot, i),
+                                ),
+                                Text(
+                                  '|',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                                IconButton(
                                     icon: new Icon(Icons.content_copy),
                                     onPressed: () {
                                       Clipboard.setData(new ClipboardData(
@@ -141,7 +150,9 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                 ),
                                 IconButton(
                                   icon: new Icon(Icons.bookmark_border),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    setState(() {});
+                                  },
                                 ),
                               ],
                             ),
@@ -152,5 +163,22 @@ class _SurahTafseerState extends State<SurahTafseer> {
                 : Center(child: CircularProgressIndicator());
           },
         ));
+  }
+
+  void _onButtonPressed(c, snapshot, i) {
+    String key = snapshot.data.text.keys.elementAt(i);
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Column(
+            children: <Widget>[
+              ListTile(
+                leading: Icon(Icons.info_outline),
+                title: Text(snapshot.data.translations.id.text[key]),
+                // onTap: () => _selectItem('In shaa Allah'),
+              )
+            ],
+          );
+        });
   }
 }
