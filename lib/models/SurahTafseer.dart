@@ -80,34 +80,33 @@ class Tafsir {
 }
 
 class TafsirId {
-  Kemenag kemenag;
+  Parsawahan parsawahan;
 
-  TafsirId({
-    this.kemenag,
-  });
+  TafsirId({this.parsawahan});
 
   factory TafsirId.fromJson(Map<String, dynamic> json) => TafsirId(
-        kemenag:
-            json["kemenag"] == null ? null : Kemenag.fromJson(json["kemenag"]),
+        parsawahan: json["parsawahan"] == null
+            ? null
+            : Parsawahan.fromJson(json["parsawahan"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "kemenag": kemenag == null ? null : kemenag.toJson(),
+        "parsawahan": parsawahan == null ? null : parsawahan.toJson(),
       };
 }
 
-class Kemenag {
+class Parsawahan {
   String name;
   String source;
   Map<String, String> text;
 
-  Kemenag({
+  Parsawahan({
     this.name,
     this.source,
     this.text,
   });
 
-  factory Kemenag.fromJson(Map<String, dynamic> json) => Kemenag(
+  factory Parsawahan.fromJson(Map<String, dynamic> json) => Parsawahan(
         name: json["name"] == null ? null : json["name"],
         source: json["source"] == null ? null : json["source"],
         text: json["text"] == null

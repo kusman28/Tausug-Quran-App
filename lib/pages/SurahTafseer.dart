@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tausug_tafseer/controllers/Surah.dart';
 import 'package:tausug_tafseer/models/SurahTafseer.dart';
 import 'package:tausug_tafseer/style/Hex.dart';
@@ -81,7 +82,7 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                     snapshot.data.text.keys.elementAt(i),
                                     style: TextStyle(fontSize: 12.0)),
                               ),
-                              title: SelectableText(
+                              title: Text(
                                 '${snapshot.data.text[key]}',
                                 // textAlign: TextAlign.end,
                                 textDirection: TextDirection.rtl,
@@ -102,7 +103,7 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   AppStyle.spaceH5,
-                                  SelectableText(
+                                  Text(
                                     snapshot.data.translations.id.text[key],
                                     style: TextStyle(
                                       fontSize: ui.fontSizetext,
@@ -118,7 +119,7 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                 IconButton(
                                   icon: new Icon(Icons.info_outline),
                                   onPressed: () =>
-                                      _onButtonPressed(c, snapshot, i),
+                                      _onButtonPressed(snapshot, key),
                                 ),
                                 Text(
                                   '|',
@@ -141,7 +142,8 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                           .showSnackBar(SnackBar(
                                         content: Text('Tafseer Copied'),
                                         backgroundColor:
-                                            Color(hexColor('#216353')),
+                                            Color(hexColor('#373a40')),
+                                        duration: Duration(seconds: 1),
                                       ));
                                     }),
                                 Text(
@@ -149,9 +151,20 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                   style: TextStyle(color: Colors.grey),
                                 ),
                                 IconButton(
-                                  icon: new Icon(Icons.bookmark_border),
+                                  // icon: new Icon(Icons.bookmark_border),
+                                  icon: Icon(
+                                    _selectedIndex != null &&
+                                            _selectedIndex == i
+                                        ? Icons.bookmark
+                                        : Icons.bookmark_border,
+                                    color: _selectedIndex != null &&
+                                            _selectedIndex == i
+                                        ? Colors.blue
+                                        : Colors.grey,
+                                  ),
                                   onPressed: () {
-                                    setState(() {});
+                                    _onSelected(i);
+                                    // setState(() {});
                                   },
                                 ),
                               ],
@@ -165,20 +178,47 @@ class _SurahTafseerState extends State<SurahTafseer> {
         ));
   }
 
-  void _onButtonPressed(c, snapshot, i) {
-    String key = snapshot.data.text.keys.elementAt(i);
+  int _selectedIndex;
+  void _onSelected(i) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.getInt(i);
+    setState(() {
+      _selectedIndex = i;
+      print(_selectedIndex);
+    });
+  }
+
+  void _onButtonPressed(snapshot, key) {
+    // String key = snapshot.data.text.keys.elementAt(i);
     showModalBottomSheet(
         context: context,
         builder: (context) {
-          return Column(
-            children: <Widget>[
-              ListTile(
-                leading: Icon(Icons.info_outline),
-                title: Text(snapshot.data.translations.id.text[key]),
-                // onTap: () => _selectItem('In shaa Allah'),
-              )
-            ],
+          return Container(
+            color: Color(0xFF737373),
+            height: 200,
+            child: Container(
+              child: _buildButtomNav(snapshot, key),
+              decoration: BoxDecoration(
+                  color: Theme.of(context).canvasColor,
+                  borderRadius: BorderRadius.only(
+                      topLeft: const Radius.circular(10),
+                      topRight: const Radius.circular(10))),
+            ),
           );
         });
+  }
+
+  ListView _buildButtomNav(snapshot, key) {
+    return ListView(
+      children: <Widget>[
+        ListTile(
+          contentPadding: EdgeInsets.all(20),
+          leading: Icon(Icons.info),
+          title: Text(
+              'Parsawahan:\n' + snapshot.data.tafsir.id.parsawahan.text[key]),
+          // onTap: () => _selectItem('In shaa Allah'),
+        )
+      ],
+    );
   }
 }
