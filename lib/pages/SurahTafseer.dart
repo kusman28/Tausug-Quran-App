@@ -4,7 +4,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tausug_tafseer/controllers/DBHelper.dart';
+import 'package:tausug_tafseer/controllers/Pangindanan.dart';
 import 'package:tausug_tafseer/controllers/Surah.dart';
 import 'package:tausug_tafseer/models/SurahTafseer.dart';
 import 'package:tausug_tafseer/style/Hex.dart';
@@ -22,6 +23,13 @@ class SurahTafseer extends StatefulWidget {
 }
 
 class _SurahTafseerState extends State<SurahTafseer> {
+  // final AllSurah pangindanan;
+
+  // _SurahTafseerState(this.pangindanan);
+  // String ayat;
+  // int curUserId;
+  // var dbHelper;
+
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -58,6 +66,7 @@ class _SurahTafseerState extends State<SurahTafseer> {
         body: FutureBuilder<AllSurah>(
           future: ServiceData().loadSurahTafseer(widget.index),
           builder: (c, snapshot) {
+            // var myDatabase = Provider.of<DBHelper>(context);
             return snapshot.hasData
                 ? ListView.separated(
                     // physics: AlwaysScrollableScrollPhysics(),
@@ -116,17 +125,19 @@ class _SurahTafseerState extends State<SurahTafseer> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
-                                IconButton(
-                                  icon: new Icon(Icons.info_outline),
-                                  onPressed: () =>
-                                      _onButtonPressed(snapshot, key),
-                                ),
-                                Text(
-                                  '|',
-                                  style: TextStyle(color: Colors.grey),
-                                ),
+                                // IconButton(
+                                //   icon: new Icon(Icons.info_outline),
+                                //   color: Colors.grey,
+                                //   onPressed: () =>
+                                //       _onButtonPressed(snapshot, key),
+                                // ),
+                                // Text(
+                                //   '|',
+                                //   style: TextStyle(color: Colors.grey[300]),
+                                // ),
                                 IconButton(
                                     icon: new Icon(Icons.content_copy),
+                                    color: Colors.grey,
                                     onPressed: () {
                                       Clipboard.setData(new ClipboardData(
                                           text: '${snapshot.data.text[key]}' +
@@ -148,25 +159,30 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                     }),
                                 Text(
                                   '|',
-                                  style: TextStyle(color: Colors.grey),
+                                  style: TextStyle(color: Colors.grey[300]),
                                 ),
                                 IconButton(
-                                  // icon: new Icon(Icons.bookmark_border),
-                                  icon: Icon(
-                                    _selectedIndex != null &&
-                                            _selectedIndex == i
-                                        ? Icons.bookmark
-                                        : Icons.bookmark_border,
-                                    color: _selectedIndex != null &&
-                                            _selectedIndex == i
-                                        ? Colors.blue
-                                        : Colors.grey,
-                                  ),
-                                  onPressed: () {
-                                    _onSelected(i);
+                                    // icon: new Icon(Icons.bookmark_border),
+                                    icon: Icon(
+                                      _selectedIndex != null &&
+                                              _selectedIndex ==
+                                                  snapshot.data.translations.id
+                                                      .text[key]
+                                          ? Icons.bookmark
+                                          : Icons.bookmark_border,
+                                      color: _selectedIndex != null &&
+                                              _selectedIndex ==
+                                                  snapshot.data.translations.id
+                                                      .text[key]
+                                          ? Colors.blue
+                                          : Colors.grey,
+                                    ),
+                                    onPressed: () => _test(snapshot, key)
+                                    // DBHelper.ddb.save(
+                                    //     snapshot.data.translations.id.text[key]),
+                                    // _onSelected(snapshot, key);
                                     // setState(() {});
-                                  },
-                                ),
+                                    ),
                               ],
                             ),
                           ],
@@ -178,12 +194,16 @@ class _SurahTafseerState extends State<SurahTafseer> {
         ));
   }
 
-  int _selectedIndex;
-  void _onSelected(i) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.getInt(i);
+  void _test(snapshot, key) {
     setState(() {
-      _selectedIndex = i;
+      DBHelper.ddb.save(snapshot.data.translations.id.text[key]);
+    });
+  }
+
+  String _selectedIndex;
+  void _onSelected(snapshot, key) {
+    setState(() {
+      _selectedIndex = snapshot.data.translations.id.text[key];
       print(_selectedIndex);
     });
   }
@@ -195,7 +215,7 @@ class _SurahTafseerState extends State<SurahTafseer> {
         builder: (context) {
           return Container(
             color: Color(0xFF737373),
-            height: 200,
+            height: 250,
             child: Container(
               child: _buildButtomNav(snapshot, key),
               decoration: BoxDecoration(
