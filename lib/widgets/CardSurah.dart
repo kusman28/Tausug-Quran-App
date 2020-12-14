@@ -63,7 +63,7 @@ class CardSurah extends StatelessWidget {
                 style: TextStyle(color: Color(hexColor('#222831'))),
                 // textAlign: TextAlign.left,
               ),
-              new Text(tafsir),
+              // new Text(tafsir),
             ],
           ),
         ),

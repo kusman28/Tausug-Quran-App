@@ -6,8 +6,9 @@ import 'dart:io' as io;
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:tausug_tafseer/controllers/Pangindanan.dart';
 import 'package:tausug_tafseer/models/SurahTafseer.dart';
-import 'Pangindanan.dart';
+import 'package:tausug_tafseer/models/Surah.dart';
 
 class DBHelper {
   static Database _db;
@@ -40,7 +41,7 @@ class DBHelper {
         .execute("CREATE TABLE $TABLE ($ID INTEGER PRIMARY KEY, $AYAT TEXT)");
   }
 
-  Future<Pangindanan> save(Pangindanan pangindanan) async {
+  Future<Bookmarks> save(Bookmarks pangindanan) async {
     var dbClient = await db;
     pangindanan.id = await dbClient.insert(TABLE, pangindanan.toMap());
     return pangindanan;
@@ -52,14 +53,14 @@ class DBHelper {
     */
   }
 
-  Future<List<Pangindanan>> getPangindanan() async {
+  Future<List<Bookmarks>> getPangindanan() async {
     var dbClient = await db;
     List<Map> maps = await dbClient.query(TABLE, columns: [ID, AYAT]);
     //List<Map> maps = await dbClient.rawQuery("SELECT * FROM $TABLE");
-    List<Pangindanan> mgaPangindanan = [];
+    List<Bookmarks> mgaPangindanan = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-        mgaPangindanan.add(Pangindanan.fromMap(maps[i]));
+        mgaPangindanan.add(Bookmarks.fromMap(maps[i]));
       }
     }
     return mgaPangindanan;
@@ -70,11 +71,11 @@ class DBHelper {
     return await dbClient.delete(TABLE, where: '$ID = ?', whereArgs: [id]);
   }
 
-  Future<int> update(Pangindanan pangindanan) async {
-    var dbClient = await db;
-    return await dbClient.update(TABLE, pangindanan.toMap(),
-        where: '$ID = ?', whereArgs: [pangindanan.id]);
-  }
+  // Future<int> update(Pangindanan pangindanan) async {
+  //   var dbClient = await db;
+  //   return await dbClient.update(TABLE, pangindanan.toMap(),
+  //       where: '$ID = ?', whereArgs: [pangindanan.id]);
+  // }
 
   Future close() async {
     var dbClient = await db;

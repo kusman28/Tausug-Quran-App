@@ -11,6 +11,7 @@ import 'package:tausug_tafseer/models/SurahTafseer.dart';
 import 'package:tausug_tafseer/style/Hex.dart';
 import 'package:tausug_tafseer/style/Style.dart';
 import 'package:tausug_tafseer/style/UI.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SurahTafseer extends StatefulWidget {
   final tafsir, basmalah, detail, index;
@@ -23,13 +24,6 @@ class SurahTafseer extends StatefulWidget {
 }
 
 class _SurahTafseerState extends State<SurahTafseer> {
-  // final AllSurah pangindanan;
-
-  // _SurahTafseerState(this.pangindanan);
-  // String ayat;
-  // int curUserId;
-  // var dbHelper;
-
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -151,7 +145,7 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                               '#TausugQuran'));
                                       _scaffoldKey.currentState
                                           .showSnackBar(SnackBar(
-                                        content: Text('Tafseer Copied'),
+                                        content: Text('Tafsir Copied'),
                                         backgroundColor:
                                             Color(hexColor('#373a40')),
                                         duration: Duration(seconds: 1),
@@ -177,12 +171,16 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                           ? Colors.blue
                                           : Colors.grey,
                                     ),
-                                    onPressed: () => _test(snapshot, key)
-                                    // DBHelper.ddb.save(
-                                    //     snapshot.data.translations.id.text[key]),
-                                    // _onSelected(snapshot, key);
-                                    // setState(() {});
-                                    ),
+                                    onPressed: () {
+                                      _onSelected(snapshot, key);
+                                      _scaffoldKey.currentState
+                                          .showSnackBar(SnackBar(
+                                        content: Text('Added to Pangindanan'),
+                                        backgroundColor:
+                                            Color(hexColor('#373a40')),
+                                        duration: Duration(seconds: 1),
+                                      ));
+                                    }),
                               ],
                             ),
                           ],
@@ -194,16 +192,12 @@ class _SurahTafseerState extends State<SurahTafseer> {
         ));
   }
 
-  void _test(snapshot, key) {
-    setState(() {
-      DBHelper.ddb.save(snapshot.data.translations.id.text[key]);
-    });
-  }
-
   String _selectedIndex;
   void _onSelected(snapshot, key) {
     setState(() {
       _selectedIndex = snapshot.data.translations.id.text[key];
+      Bookmarks e = Bookmarks(null, _selectedIndex);
+      DBHelper.ddb.save(e);
       print(_selectedIndex);
     });
   }
