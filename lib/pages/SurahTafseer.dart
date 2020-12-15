@@ -71,7 +71,8 @@ class _SurahTafseerState extends State<SurahTafseer> {
                     itemBuilder: (BuildContext c, int i) {
                       String key = snapshot.data.text.keys.elementAt(i);
                       return Padding(
-                        padding: const EdgeInsets.fromLTRB(18, 10, 15, 10),
+                        // padding: const EdgeInsets.fromLTRB(18, 10, 15, 10),
+                        padding: const EdgeInsets.all(15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -194,12 +195,12 @@ class _SurahTafseerState extends State<SurahTafseer> {
 
   String _selectedIndex;
   void _onSelected(snapshot, key) {
-    setState(() {
-      _selectedIndex = snapshot.data.translations.id.text[key];
-      Bookmarks e = Bookmarks(null, _selectedIndex);
-      DBHelper.ddb.save(e);
-      print(_selectedIndex);
-    });
+    _selectedIndex = snapshot.data.translations.id.text[key];
+    Bookmarks e = Bookmarks(null, _selectedIndex);
+    DBHelper.ddb.save(e);
+    print(_selectedIndex);
+    // setState(() {
+    // });
   }
 
   void _onButtonPressed(snapshot, key) {

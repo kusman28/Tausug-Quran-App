@@ -26,15 +26,13 @@ class _PangindananState extends State<Pangindanan> {
         future: DBHelper.ddb.getPangindanan(),
         // stream: myDatabase.getEmployees().asStream(),
         builder: (context, AsyncSnapshot<List<Bookmarks>> snapshot) {
-          return Column(
-            children: <Widget>[
-              Expanded(
-                child: ListView.builder(
+          return snapshot.hasData
+              ? ListView.separated(
+                  separatorBuilder: (context, index) => Divider(
+                        color: Colors.grey,
+                      ),
                   itemCount: snapshot.data?.length,
                   itemBuilder: (_, index) {
-                    if (snapshot.data == null) {
-                      return null;
-                    }
                     Bookmarks ayat = snapshot.data[index];
 
                     return ListTile(
@@ -46,19 +44,16 @@ class _PangindananState extends State<Pangindanan> {
                             // TODO(fitza): verify that this is or isn't best practice
                             setState(() => {});
                           }),
-                      // onTap: () {
-                      //   Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(
-                      //           builder: (context) =>
-                      //               HackerNewsWebPage(article.url)));
-                      // },
+                      onTap: () {
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) =>
+                        //             HackerNewsWebPage(article.url)));
+                      },
                     );
-                  },
-                ),
-              ),
-            ],
-          );
+                  })
+              : Center(child: CircularProgressIndicator());
         },
       ),
     );
