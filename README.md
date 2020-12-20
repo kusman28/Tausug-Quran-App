@@ -1,6 +1,6 @@
 # Tausug Quran
 
-Al-Quran Mahamulliya ha Bahasa Sug.
+Tafsir Maana sin Quran Mahamulliya ha Bahasa Sug.
 
 ## Screenshots
 
