@@ -6,5 +6,5 @@ class Favorite {
   final int id;
   final String uid, ayat, tafsir;
 
-  Favorite(this.id, this.uid, this.ayat, this.tafsir);
+  Favorite({this.id, this.uid, this.ayat, this.tafsir});
 }

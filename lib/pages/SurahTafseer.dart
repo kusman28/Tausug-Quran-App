@@ -1,14 +1,17 @@
 // بسم الله الرحمن الرحيم
 // O' Tuhan namu papag-barakata kamu in Application ini
 // sarta tarbilanga kami dayng ha mga Mukhliseen. Ameen
+import 'package:floor/floor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:tausug_tafseer/const/const.dart';
 import 'package:tausug_tafseer/controllers/DBHelper.dart';
 import 'package:tausug_tafseer/controllers/Pangindanan.dart';
 import 'package:tausug_tafseer/controllers/Surah.dart';
 import 'package:tausug_tafseer/dao/FavoriteDAO.dart';
 import 'package:tausug_tafseer/database/database.dart';
+import 'package:tausug_tafseer/entity/favorite.dart';
 import 'package:tausug_tafseer/models/SurahTafseer.dart';
 import 'package:tausug_tafseer/style/Hex.dart';
 import 'package:tausug_tafseer/style/Style.dart';
@@ -27,7 +30,12 @@ class SurahTafseer extends StatefulWidget {
   final FavoriteDAO dao;
   final tafsir, basmalah, detail, index;
   SurahTafseer(
-      {Key key, @required this.dao, this.tafsir, this.basmalah, this.detail, this.index})
+      {Key key,
+      @required this.dao,
+      this.tafsir,
+      this.basmalah,
+      this.detail,
+      this.index})
       : super(key: key);
 
   @override
@@ -168,19 +176,39 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                   style: TextStyle(color: Colors.grey[300]),
                                 ),
                                 FutureBuilder(
-                                    future: checkFav(snapshot.data.text[i]),
+                                    future: checkFav(snapshot.data[index]),
                                     builder: (context, snapshot) {
                                       if (snapshot.hasData)
                                         return IconButton(
                                             icon: Icon(
                                               Icons.bookmark,
-                                              color: Colors.blue[900],
+                                              color: Colors.blue[700],
                                             ),
-                                            onPressed: null);
+                                            onPressed: () async {
+                                              var item =
+                                                  snapshot.data as Favorite;
+                                              await widget.dao.deleteFav(item);
+
+                                              setState(() {});
+                                            });
                                       else
                                         IconButton(
                                             icon: Icon(Icons.bookmark_border),
-                                            onPressed: null);
+                                            onPressed: () async {
+                                              Favorite fav = new Favorite(
+                                                  id: snapshot
+                                                      .data[widget.index],
+                                                  uid: UID,
+                                                  ayat: snapshot.data.text[key],
+                                                  tafsir: snapshot
+                                                      .data
+                                                      .translations
+                                                      .id
+                                                      .text[key]);
+                                              await widget.dao.insertFav(fav);
+
+                                              setState(() {});
+                                            });
                                     })
                                 // IconButton(
                                 //     // icon: new Icon(Icons.bookmark_border),
@@ -261,8 +289,7 @@ class _SurahTafseerState extends State<SurahTafseer> {
     );
   }
 
-  Future<FavoriteDAO> checkFav(String text) async {
-    return await widget.dao.getFavInFavByUid(UID, snapshop.id)
+  Future<Favorite> checkFav(AllSurah snapshot) async {
+    return await widget.dao.getFavInFavByUid(UID, widget.index);
   }
-
 }
