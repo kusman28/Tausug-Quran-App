@@ -4,27 +4,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:tausug_tafseer/database/database.dart';
 import 'package:tausug_tafseer/pages/TopBarNavigation.dart';
 import 'package:tausug_tafseer/style/Hex.dart';
 import 'package:provider/provider.dart';
 import 'package:tausug_tafseer/style/UI.dart';
 
-import 'dao/FavoriteDAO.dart';
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  final database =
-      await $FloorAppDatabase.databaseBuilder('bookmarks.db').build();
-  final dao = database.favoriteDAO;
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => UI()),
-  ], child: MyApp(dao: dao)));
-}
+void main() => runApp(MultiProvider(providers: [
+      ChangeNotifierProvider(create: (_) => UI()),
+    ], child: MyApp()));
 
 class MyApp extends StatelessWidget {
-  final FavoriteDAO dao;
-  MyApp({this.dao});
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

@@ -8,15 +8,26 @@ import 'package:tausug_tafseer/controllers/DBHelper.dart';
 import 'package:tausug_tafseer/controllers/Pangindanan.dart';
 import 'package:tausug_tafseer/controllers/Surah.dart';
 import 'package:tausug_tafseer/dao/FavoriteDAO.dart';
+import 'package:tausug_tafseer/database/database.dart';
 import 'package:tausug_tafseer/models/SurahTafseer.dart';
 import 'package:tausug_tafseer/style/Hex.dart';
 import 'package:tausug_tafseer/style/Style.dart';
 import 'package:tausug_tafseer/style/UI.dart';
 
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final database =
+      await $FloorAppDatabase.databaseBuilder('bookmarks.db').build();
+  final dao = database.favoriteDAO;
+
+  runApp(SurahTafseer(dao: dao));
+}
+
 class SurahTafseer extends StatefulWidget {
+  final FavoriteDAO dao;
   final tafsir, basmalah, detail, index;
   SurahTafseer(
-      {Key key, @required this.tafsir, this.basmalah, this.detail, this.index})
+      {Key key, @required this.dao, this.tafsir, this.basmalah, this.detail, this.index})
       : super(key: key);
 
   @override
@@ -250,8 +261,8 @@ class _SurahTafseerState extends State<SurahTafseer> {
     );
   }
 
-  Future<FavoriteDAO> checkFav(String text) {
-    return await 
+  Future<FavoriteDAO> checkFav(String text) async {
+    return await widget.dao.getFavInFavByUid(UID, snapshop.id)
   }
 
 }
