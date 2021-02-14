@@ -7,11 +7,11 @@ import 'package:provider/provider.dart';
 import 'package:tausug_tafseer/controllers/DBHelper.dart';
 import 'package:tausug_tafseer/controllers/Pangindanan.dart';
 import 'package:tausug_tafseer/controllers/Surah.dart';
+import 'package:tausug_tafseer/dao/FavoriteDAO.dart';
 import 'package:tausug_tafseer/models/SurahTafseer.dart';
 import 'package:tausug_tafseer/style/Hex.dart';
 import 'package:tausug_tafseer/style/Style.dart';
 import 'package:tausug_tafseer/style/UI.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SurahTafseer extends StatefulWidget {
   final tafsir, basmalah, detail, index;
@@ -156,32 +156,42 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                   '|',
                                   style: TextStyle(color: Colors.grey[300]),
                                 ),
-                                IconButton(
-                                    // icon: new Icon(Icons.bookmark_border),
-                                    icon: Icon(
-                                      _selectedIndex != null &&
-                                              _selectedIndex ==
-                                                  snapshot.data.translations.id
-                                                      .text[key]
-                                          ? Icons.bookmark
-                                          : Icons.bookmark_border,
-                                      color: _selectedIndex != null &&
-                                              _selectedIndex ==
-                                                  snapshot.data.translations.id
-                                                      .text[key]
-                                          ? Colors.blue
-                                          : Colors.grey,
-                                    ),
-                                    onPressed: () {
-                                      _onSelected(snapshot, key);
-                                      _scaffoldKey.currentState
-                                          .showSnackBar(SnackBar(
-                                        content: Text('Added to Pangindanan'),
-                                        backgroundColor:
-                                            Color(hexColor('#373a40')),
-                                        duration: Duration(seconds: 1),
-                                      ));
-                                    }),
+                                FutureBuilder(
+                                    future: checkFav(snapshot.data.text[i]),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasData)
+                                        return IconButton(
+                                            icon: Icon(
+                                              Icons.bookmark,
+                                              color: Colors.blue[900],
+                                            ),
+                                            onPressed: null);
+                                      else
+                                        IconButton(
+                                            icon: Icon(Icons.bookmark_border),
+                                            onPressed: null);
+                                    })
+                                // IconButton(
+                                //     // icon: new Icon(Icons.bookmark_border),
+                                //     icon: Icon(Icons.bookmark_border
+                                //         // _selectedIndex != null
+                                //         //     ? Icons.bookmark
+                                //         //     : Icons.bookmark_border,
+                                //         // color: _selectedIndex != null
+                                //         //     ? Colors.blue
+                                //         //     : Colors.grey,
+                                //         ),
+                                //     onPressed: () {
+                                //       // _onSelected(snapshot, key);
+                                //       // _scaffoldKey.currentState
+                                //       //     .showSnackBar(SnackBar(
+                                //       //   content: Text('Added to Pangindanan'),
+                                //       //   backgroundColor:
+                                //       //       Color(hexColor('#373a40')),
+                                //       //   duration: Duration(seconds: 1),
+                                //       // ));
+                                //     }
+                                //     ),
                               ],
                             ),
                           ],
@@ -193,16 +203,19 @@ class _SurahTafseerState extends State<SurahTafseer> {
         ));
   }
 
-  String _selectedIndex;
-  void _onSelected(snapshot, key) {
-    _selectedIndex = snapshot.data.translations.id.text[key];
-    Bookmarks e = Bookmarks(null, _selectedIndex);
-    DBHelper.ddb.save(e);
-    print(_selectedIndex);
-    // setState(() {
-    // });
-  }
+  // String _selectedIndex;
+  // void _onSelected(snapshot, key) {
+  //   _selectedIndex = snapshot.data.text[key] +
+  //       '\n' +
+  //       snapshot.data.translations.id.text[key];
+  //   Bookmarks e = Bookmarks(null, _selectedIndex);
+  //   DBHelper.ddb.save(e);
+  //   print(_selectedIndex);
+  //   // setState(() {
+  //   // });
+  // }
 
+  // Parsawahan
   void _onButtonPressed(snapshot, key) {
     // String key = snapshot.data.text.keys.elementAt(i);
     showModalBottomSheet(
@@ -236,4 +249,9 @@ class _SurahTafseerState extends State<SurahTafseer> {
       ],
     );
   }
+
+  Future<FavoriteDAO> checkFav(String text) {
+    return await 
+  }
+
 }

@@ -7,8 +7,6 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tausug_tafseer/controllers/Pangindanan.dart';
-import 'package:tausug_tafseer/models/SurahTafseer.dart';
-import 'package:tausug_tafseer/models/Surah.dart';
 
 class DBHelper {
   static Database _db;

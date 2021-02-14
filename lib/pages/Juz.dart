@@ -16,24 +16,24 @@ class _JuzState extends State<Juz> {
         margin: EdgeInsets.only(top: 100),
         child: Column(
           children: <Widget>[
-            // Text(
-            //   "Coming Soon...",
-            //   style: TextStyle(
-            //     color: Colors.black,
-            //     fontWeight: FontWeight.normal,
-            //     fontSize: 25,
-            //   ),
-            //   // textAlign: TextAlign.center,
-            // ),
-            // Text(
-            //   "In shaa Allah",
-            //   style: TextStyle(
-            //     color: Colors.black,
-            //     fontWeight: FontWeight.bold,
-            //     fontSize: 25,
-            //   ),
-            //   // textAlign: TextAlign.center,
-            // ),
+            Text(
+              "Ha susungun...",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.normal,
+                fontSize: 25,
+              ),
+              // textAlign: TextAlign.center,
+            ),
+            Text(
+              "Masi masi pa in pag-encode sin kami iban pag-butang mga functions kalagihan.\nMura murahan dumagbus in maksud natu ini.\nLapayun niyu mayan kami ha dua'a niyu. Ameen\n\n#TausugQuran",
+              style: TextStyle(
+                color: Colors.black,
+                // fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),
