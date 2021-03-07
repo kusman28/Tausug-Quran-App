@@ -13,14 +13,15 @@ class UI with ChangeNotifier {
     ayatSize = newValue;
     notifyListeners();
   }
+
   double get fontSize => ayatSize * 35;
   double get sliderFontSize => ayatSize;
-  
 
   set fontSizetext(newValue) {
     tafseerSize = newValue;
     notifyListeners();
   }
+
   double get fontSizetext => tafseerSize * 40;
   double get sliderFontSizetext => tafseerSize;
 
@@ -28,11 +29,13 @@ class UI with ChangeNotifier {
     translate = newValue;
     notifyListeners();
   }
+
   bool get tarjuma => translate;
 
-  set tafseer(newValue){
+  set tafseer(newValue) {
     makna = newValue;
     notifyListeners();
   }
+
   bool get tafseer => makna;
 }

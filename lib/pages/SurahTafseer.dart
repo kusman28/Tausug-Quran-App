@@ -61,134 +61,159 @@ class _SurahTafseerState extends State<SurahTafseer> {
           future: ServiceData().loadSurahTafseer(widget.index),
           builder: (c, snapshot) {
             // var myDatabase = Provider.of<DBHelper>(context);
-            return snapshot.hasData
-                ? ListView.separated(
-                    // physics: AlwaysScrollableScrollPhysics(),
-                    separatorBuilder: (context, index) => Divider(
-                          color: Colors.grey,
-                        ),
-                    itemCount: snapshot.data.text.length,
-                    itemBuilder: (BuildContext c, int i) {
-                      String key = snapshot.data.text.keys.elementAt(i);
-                      return Padding(
-                        // padding: const EdgeInsets.fromLTRB(18, 10, 15, 10),
-                        padding: const EdgeInsets.all(15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            ListTile(
-                              leading: CircleAvatar(
-                                foregroundColor: Color(hexColor('#216353')),
-                                backgroundColor: Colors.white54,
-                                backgroundImage:
-                                    AssetImage('images/separator.png'),
-                                child: Text(
-                                    snapshot.data.text.keys.elementAt(i),
-                                    style: TextStyle(fontSize: 12.0)),
-                              ),
-                              title: Text(
-                                '${snapshot.data.text[key]}',
-                                // textAlign: TextAlign.end,
-                                textDirection: TextDirection.rtl,
-                                style: TextStyle(
-                                  fontFamily: 'KFGQPC Uthman Taha Naskh',
-                                  fontSize: ui.fontSize,
-                                  height: 1.5,
+            // new Image.asset('images/basmalah.png');
+            // Container(
+            //     height: 40,
+            //     color: Colors.deepOrange,
+            //     child: Center(
+            //       child: Text(
+            //         'Header',
+            //         style: TextStyle(color: Colors.white, fontSize: 16),
+            //       ),
+            //     ),
+            //   );
+            return ListView(children: <Widget>[
+              Container(
+                height: 50,
+                // color: Color(hexColor('#216353')),
+                // decoration: BoxDecoration(
+                //     border: Border.all(
+                //         width: 2, color: Color(hexColor('#216353')))),
+                child: Center(
+                    child: snapshot.data.basmalah == null
+                        ? Image.asset('images/transparent_bg.png')
+                        : Image.asset(snapshot.data.basmalah)),
+              ),
+              snapshot.hasData
+                  ? ListView.separated(
+                      shrinkWrap: true,
+                      physics: ScrollPhysics(),
+                      separatorBuilder: (context, index) => Divider(
+                            color: Colors.grey,
+                          ),
+                      itemCount: snapshot.data.text.length,
+                      itemBuilder: (BuildContext c, int i) {
+                        String key = snapshot.data.text.keys.elementAt(i);
+                        return Padding(
+                          // padding: const EdgeInsets.fromLTRB(18, 10, 15, 10),
+                          padding: const EdgeInsets.all(15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              ListTile(
+                                leading: CircleAvatar(
+                                  foregroundColor: Color(hexColor('#216353')),
+                                  backgroundColor: Colors.white54,
+                                  backgroundImage:
+                                      AssetImage('images/separator.png'),
+                                  child: Text(
+                                      snapshot.data.text.keys.elementAt(i),
+                                      style: TextStyle(fontSize: 12.0)),
                                 ),
-                              ),
-                              // onTap: (){
-                              //   Clipboard.setData(new ClipboardData(text: '${snapshot.data.text[key]}'));
-                              //   Scaffold.of(context).showSnackBar(SnackBar
-                              //     (content: Text('text copied')));
-                              // }
-                            ),
-                            if (ui.tarjuma)
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  AppStyle.spaceH5,
-                                  Text(
-                                    snapshot.data.translations.id.text[key],
-                                    style: TextStyle(
-                                      fontSize: ui.fontSizetext,
-                                    ),
+                                title: Text(
+                                  '${snapshot.data.text[key]}',
+                                  // textAlign: TextAlign.end,
+                                  textDirection: TextDirection.rtl,
+                                  style: TextStyle(
+                                    fontFamily: 'KFGQPC Uthman Taha Naskh',
+                                    fontSize: ui.fontSize,
+                                    height: 1.5,
                                   ),
-                                  AppStyle.spaceH10,
+                                ),
+                                // onTap: (){
+                                //   Clipboard.setData(new ClipboardData(text: '${snapshot.data.text[key]}'));
+                                //   Scaffold.of(context).showSnackBar(SnackBar
+                                //     (content: Text('text copied')));
+                                // }
+                              ),
+                              if (ui.tarjuma)
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    AppStyle.spaceH5,
+                                    Text(
+                                      snapshot.data.translations.id.text[key],
+                                      style: TextStyle(
+                                        fontSize: ui.fontSizetext,
+                                      ),
+                                    ),
+                                    AppStyle.spaceH10,
+                                  ],
+                                ),
+                              AppStyle.spaceH10,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  // IconButton(
+                                  //   icon: new Icon(Icons.info_outline),
+                                  //   color: Colors.grey,
+                                  //   onPressed: () =>
+                                  //       _onButtonPressed(snapshot, key),
+                                  // ),
+                                  // Text(
+                                  //   '|',
+                                  //   style: TextStyle(color: Colors.grey[300]),
+                                  // ),
+                                  IconButton(
+                                      icon: new Icon(Icons.content_copy),
+                                      color: Colors.grey,
+                                      onPressed: () {
+                                        Clipboard.setData(new ClipboardData(
+                                            text: '${snapshot.data.text[key]}' +
+                                                '\n \n'
+                                                    '${snapshot.data.translations.id.text[key]}' +
+                                                '\n'
+                                                    '[${snapshot.data.nameLatin}' +
+                                                ' : '
+                                                    '${snapshot.data.text.keys.elementAt(i)}]' +
+                                                '\n \n' +
+                                                '#TausugQuran'));
+                                        _scaffoldKey.currentState
+                                            .showSnackBar(SnackBar(
+                                          content: Text('Tafsir Copied'),
+                                          backgroundColor:
+                                              Color(hexColor('#373a40')),
+                                          duration: Duration(seconds: 1),
+                                        ));
+                                      }),
+                                  Text(
+                                    '|',
+                                    style: TextStyle(color: Colors.grey[300]),
+                                  ),
+                                  IconButton(
+                                      // icon: new Icon(Icons.bookmark_border),
+                                      icon: Icon(
+                                        _selectedIndex != null &&
+                                                _selectedIndex ==
+                                                    snapshot.data.translations
+                                                        .id.text[key]
+                                            ? Icons.bookmark
+                                            : Icons.bookmark_border,
+                                        color: _selectedIndex != null &&
+                                                _selectedIndex ==
+                                                    snapshot.data.translations
+                                                        .id.text[key]
+                                            ? Colors.blue
+                                            : Colors.grey,
+                                      ),
+                                      onPressed: () {
+                                        _onSelected(snapshot, key);
+                                        _scaffoldKey.currentState
+                                            .showSnackBar(SnackBar(
+                                          content: Text('Added to Pangindanan'),
+                                          backgroundColor:
+                                              Color(hexColor('#373a40')),
+                                          duration: Duration(seconds: 1),
+                                        ));
+                                      }),
                                 ],
                               ),
-                            AppStyle.spaceH10,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
-                                // IconButton(
-                                //   icon: new Icon(Icons.info_outline),
-                                //   color: Colors.grey,
-                                //   onPressed: () =>
-                                //       _onButtonPressed(snapshot, key),
-                                // ),
-                                // Text(
-                                //   '|',
-                                //   style: TextStyle(color: Colors.grey[300]),
-                                // ),
-                                IconButton(
-                                    icon: new Icon(Icons.content_copy),
-                                    color: Colors.grey,
-                                    onPressed: () {
-                                      Clipboard.setData(new ClipboardData(
-                                          text: '${snapshot.data.text[key]}' +
-                                              '\n \n'
-                                                  '${snapshot.data.translations.id.text[key]}' +
-                                              '\n'
-                                                  '[${snapshot.data.nameLatin}' +
-                                              ' : '
-                                                  '${snapshot.data.text.keys.elementAt(i)}]' +
-                                              '\n \n' +
-                                              '#TausugQuran'));
-                                      _scaffoldKey.currentState
-                                          .showSnackBar(SnackBar(
-                                        content: Text('Tafsir Copied'),
-                                        backgroundColor:
-                                            Color(hexColor('#373a40')),
-                                        duration: Duration(seconds: 1),
-                                      ));
-                                    }),
-                                Text(
-                                  '|',
-                                  style: TextStyle(color: Colors.grey[300]),
-                                ),
-                                IconButton(
-                                    // icon: new Icon(Icons.bookmark_border),
-                                    icon: Icon(
-                                      _selectedIndex != null &&
-                                              _selectedIndex ==
-                                                  snapshot.data.translations.id
-                                                      .text[key]
-                                          ? Icons.bookmark
-                                          : Icons.bookmark_border,
-                                      color: _selectedIndex != null &&
-                                              _selectedIndex ==
-                                                  snapshot.data.translations.id
-                                                      .text[key]
-                                          ? Colors.blue
-                                          : Colors.grey,
-                                    ),
-                                    onPressed: () {
-                                      _onSelected(snapshot, key);
-                                      _scaffoldKey.currentState
-                                          .showSnackBar(SnackBar(
-                                        content: Text('Added to Pangindanan'),
-                                        backgroundColor:
-                                            Color(hexColor('#373a40')),
-                                        duration: Duration(seconds: 1),
-                                      ));
-                                    }),
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
-                    })
-                : Center(child: CircularProgressIndicator());
+                            ],
+                          ),
+                        );
+                      })
+                  : Center(child: CircularProgressIndicator())
+            ]);
           },
         ));
   }
