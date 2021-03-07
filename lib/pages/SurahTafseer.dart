@@ -1,41 +1,22 @@
 // بسم الله الرحمن الرحيم
 // O' Tuhan namu papag-barakata kamu in Application ini
 // sarta tarbilanga kami dayng ha mga Mukhliseen. Ameen
-import 'package:floor/floor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:tausug_tafseer/const/const.dart';
 import 'package:tausug_tafseer/controllers/DBHelper.dart';
 import 'package:tausug_tafseer/controllers/Pangindanan.dart';
 import 'package:tausug_tafseer/controllers/Surah.dart';
-import 'package:tausug_tafseer/dao/FavoriteDAO.dart';
-import 'package:tausug_tafseer/database/database.dart';
-import 'package:tausug_tafseer/entity/favorite.dart';
 import 'package:tausug_tafseer/models/SurahTafseer.dart';
 import 'package:tausug_tafseer/style/Hex.dart';
 import 'package:tausug_tafseer/style/Style.dart';
 import 'package:tausug_tafseer/style/UI.dart';
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  final database =
-      await $FloorAppDatabase.databaseBuilder('bookmarks.db').build();
-  final dao = database.favoriteDAO;
-
-  runApp(SurahTafseer(dao: dao));
-}
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SurahTafseer extends StatefulWidget {
-  final FavoriteDAO dao;
   final tafsir, basmalah, detail, index;
   SurahTafseer(
-      {Key key,
-      @required this.dao,
-      this.tafsir,
-      this.basmalah,
-      this.detail,
-      this.index})
+      {Key key, @required this.tafsir, this.basmalah, this.detail, this.index})
       : super(key: key);
 
   @override
@@ -175,62 +156,32 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                   '|',
                                   style: TextStyle(color: Colors.grey[300]),
                                 ),
-                                FutureBuilder(
-                                    future: checkFav(snapshot.data[index]),
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasData)
-                                        return IconButton(
-                                            icon: Icon(
-                                              Icons.bookmark,
-                                              color: Colors.blue[700],
-                                            ),
-                                            onPressed: () async {
-                                              var item =
-                                                  snapshot.data as Favorite;
-                                              await widget.dao.deleteFav(item);
-
-                                              setState(() {});
-                                            });
-                                      else
-                                        IconButton(
-                                            icon: Icon(Icons.bookmark_border),
-                                            onPressed: () async {
-                                              Favorite fav = new Favorite(
-                                                  id: snapshot
-                                                      .data[widget.index],
-                                                  uid: UID,
-                                                  ayat: snapshot.data.text[key],
-                                                  tafsir: snapshot
-                                                      .data
-                                                      .translations
-                                                      .id
-                                                      .text[key]);
-                                              await widget.dao.insertFav(fav);
-
-                                              setState(() {});
-                                            });
-                                    })
-                                // IconButton(
-                                //     // icon: new Icon(Icons.bookmark_border),
-                                //     icon: Icon(Icons.bookmark_border
-                                //         // _selectedIndex != null
-                                //         //     ? Icons.bookmark
-                                //         //     : Icons.bookmark_border,
-                                //         // color: _selectedIndex != null
-                                //         //     ? Colors.blue
-                                //         //     : Colors.grey,
-                                //         ),
-                                //     onPressed: () {
-                                //       // _onSelected(snapshot, key);
-                                //       // _scaffoldKey.currentState
-                                //       //     .showSnackBar(SnackBar(
-                                //       //   content: Text('Added to Pangindanan'),
-                                //       //   backgroundColor:
-                                //       //       Color(hexColor('#373a40')),
-                                //       //   duration: Duration(seconds: 1),
-                                //       // ));
-                                //     }
-                                //     ),
+                                IconButton(
+                                    // icon: new Icon(Icons.bookmark_border),
+                                    icon: Icon(
+                                      _selectedIndex != null &&
+                                              _selectedIndex ==
+                                                  snapshot.data.translations.id
+                                                      .text[key]
+                                          ? Icons.bookmark
+                                          : Icons.bookmark_border,
+                                      color: _selectedIndex != null &&
+                                              _selectedIndex ==
+                                                  snapshot.data.translations.id
+                                                      .text[key]
+                                          ? Colors.blue
+                                          : Colors.grey,
+                                    ),
+                                    onPressed: () {
+                                      _onSelected(snapshot, key);
+                                      _scaffoldKey.currentState
+                                          .showSnackBar(SnackBar(
+                                        content: Text('Added to Pangindanan'),
+                                        backgroundColor:
+                                            Color(hexColor('#373a40')),
+                                        duration: Duration(seconds: 1),
+                                      ));
+                                    }),
                               ],
                             ),
                           ],
@@ -242,19 +193,18 @@ class _SurahTafseerState extends State<SurahTafseer> {
         ));
   }
 
-  // String _selectedIndex;
-  // void _onSelected(snapshot, key) {
-  //   _selectedIndex = snapshot.data.text[key] +
-  //       '\n' +
-  //       snapshot.data.translations.id.text[key];
-  //   Bookmarks e = Bookmarks(null, _selectedIndex);
-  //   DBHelper.ddb.save(e);
-  //   print(_selectedIndex);
-  //   // setState(() {
-  //   // });
-  // }
+  String _selectedIndex;
+  void _onSelected(snapshot, key) {
+    _selectedIndex = snapshot.data.text[key] +
+        '\n' +
+        snapshot.data.translations.id.text[key];
+    Bookmarks e = Bookmarks(null, _selectedIndex);
+    DBHelper.ddb.save(e);
+    print(_selectedIndex);
+    // setState(() {
+    // });
+  }
 
-  // Parsawahan
   void _onButtonPressed(snapshot, key) {
     // String key = snapshot.data.text.keys.elementAt(i);
     showModalBottomSheet(
@@ -287,9 +237,5 @@ class _SurahTafseerState extends State<SurahTafseer> {
         )
       ],
     );
-  }
-
-  Future<Favorite> checkFav(AllSurah snapshot) async {
-    return await widget.dao.getFavInFavByUid(UID, widget.index);
   }
 }

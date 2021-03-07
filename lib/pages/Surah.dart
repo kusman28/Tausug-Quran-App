@@ -38,10 +38,11 @@ class _MgaSurahState extends State<MgaSurah> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => SurahTafseer(
-                                        detail: data.latin,
-                                        basmalah: data.basmalah,
-                                        tafsir: data.tafsir,
-                                        index: data.index)));
+                                          detail: data.latin,
+                                          basmalah: data.basmalah,
+                                          tafsir: data.tafsir,
+                                          index: data.index,
+                                        )));
                           },
                         ))
                     .toList())
