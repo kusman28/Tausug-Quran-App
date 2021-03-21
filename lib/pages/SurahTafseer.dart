@@ -61,6 +61,7 @@ class _SurahTafseerState extends State<SurahTafseer> {
           future: ServiceData().loadSurahTafseer(widget.index),
           builder: (c, snapshot) {
             // var myDatabase = Provider.of<DBHelper>(context);
+            var surah = snapshot.data;
             // new Image.asset('images/basmalah.png');
             // Container(
             //     height: 40,
@@ -75,14 +76,33 @@ class _SurahTafseerState extends State<SurahTafseer> {
             return ListView(children: <Widget>[
               Container(
                 height: 50,
-                // color: Color(hexColor('#216353')),
+                color: Color(hexColor('#216353')),
                 // decoration: BoxDecoration(
                 //     border: Border.all(
                 //         width: 2, color: Color(hexColor('#216353')))),
-                child: Center(
-                    child: snapshot.data.basmalah == null
-                        ? Image.asset('images/transparent_bg.png')
-                        : Image.asset(snapshot.data.basmalah)),
+                // child: Center(child: Image.asset(snapshot.data.basmalah)),
+                child: surah?.nameLatin == "Al-Fatihah" ||
+                        surah?.nameLatin == "At-Taubah"
+                    ? Center(
+                        child: Text(
+                        'أعوذُ بِٱللَّهِ مِنَ ٱلشَّيۡطَٰنِ ٱلرَّجِيمِ',
+                        style: TextStyle(
+                          fontFamily: 'Arabic',
+                          fontSize: ui.fontSize,
+                          color: Colors.white,
+                          height: 1.0,
+                        ),
+                      ))
+                    : Center(
+                        child: Text(
+                        'بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم',
+                        style: TextStyle(
+                          fontFamily: 'Arabic',
+                          fontSize: ui.fontSize,
+                          color: Colors.white,
+                          height: 1.0,
+                        ),
+                      )),
               ),
               snapshot.hasData
                   ? ListView.separated(
@@ -220,9 +240,9 @@ class _SurahTafseerState extends State<SurahTafseer> {
 
   String _selectedIndex;
   void _onSelected(snapshot, key) {
-    _selectedIndex = snapshot.data.text[key] +
-        '\n' +
-        snapshot.data.translations.id.text[key];
+    _selectedIndex = snapshot.data.text[key];
+    // + '\n' +
+    //     snapshot.data.translations.id.text[key];
     Bookmarks e = Bookmarks(null, _selectedIndex);
     DBHelper.ddb.save(e);
     print(_selectedIndex);

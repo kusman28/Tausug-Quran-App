@@ -3,6 +3,7 @@
         "number": "1",
         "name": "الفاتحة",
         "name_latin": "Al-Fatihah",
+        "basmalah": "images/bismillah.png",
         "number_of_ayah": "7",
         "text": {
             "1": "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ",

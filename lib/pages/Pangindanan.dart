@@ -4,6 +4,8 @@
 import 'package:flutter/material.dart';
 import 'package:tausug_tafseer/controllers/DBHelper.dart';
 import 'package:tausug_tafseer/controllers/Pangindanan.dart';
+import 'package:provider/provider.dart';
+import 'package:tausug_tafseer/style/UI.dart';
 
 class Pangindanan extends StatefulWidget {
   @override
@@ -21,6 +23,7 @@ class _PangindananState extends State<Pangindanan> {
 
   @override
   Widget build(BuildContext context) {
+    var ui = Provider.of<UI>(context);
     return Scaffold(
       body: FutureBuilder<List<Bookmarks>>(
         future: DBHelper.ddb.getPangindanan(),
@@ -36,7 +39,14 @@ class _PangindananState extends State<Pangindanan> {
                     Bookmarks ayat = snapshot.data[index];
 
                     return ListTile(
-                      title: Text(snapshot.data[index].ayat),
+                      title: Text(
+                        snapshot.data[index].ayat,
+                        style: TextStyle(
+                          fontFamily: 'Arabic',
+                          fontSize: ui.fontSize,
+                          height: 1.0,
+                        ),
+                      ),
                       trailing: IconButton(
                           icon: Icon(Icons.delete),
                           onPressed: () {
