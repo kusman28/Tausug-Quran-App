@@ -232,7 +232,10 @@ class _SurahTafseerState extends State<SurahTafseer> {
                           ),
                         );
                       })
-                  : Center(child: CircularProgressIndicator())
+                  : Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Center(child: CircularProgressIndicator()),
+                    )
             ]);
           },
         ));

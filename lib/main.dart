@@ -4,6 +4,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:tausug_tafseer/pages/Qiblah.dart';
 import 'package:tausug_tafseer/pages/TopBarNavigation.dart';
 import 'package:tausug_tafseer/style/Hex.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/Homepage': (context) => Homepage(),
+        '/Qiblah': (context) => Qiblah()
       },
     );
   }

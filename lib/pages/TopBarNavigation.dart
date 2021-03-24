@@ -4,7 +4,9 @@
 import 'package:flutter/material.dart';
 import 'package:tausug_tafseer/pages/Juz.dart';
 import 'package:tausug_tafseer/pages/Pangindanan.dart';
+import 'package:tausug_tafseer/pages/Qiblah.dart';
 import 'package:tausug_tafseer/pages/Surah.dart';
+import 'package:tausug_tafseer/style/Hex.dart';
 
 class Homepage extends StatefulWidget {
   @override
@@ -60,7 +62,7 @@ class _HomepageState extends State<Homepage> {
                   });
                 },
               ),
-              MoreFeatures(),
+              MoreFeatures()
               // IconButton(
               //   icon: Icon(
               //     Icons.more_vert,
@@ -84,7 +86,7 @@ class _HomepageState extends State<Homepage> {
   }
 }
 
-enum MenuFeatures { Qiblah, Masajid, About }
+enum MenuFeatures { Qiblah, Masajid, Waktu, About }
 
 class MoreFeatures extends StatefulWidget {
   MoreFeatures({Key key}) : super(key: key);
@@ -103,7 +105,7 @@ class _MoreFeaturesState extends State<MoreFeatures> {
             child: Row(
               children: [
                 Image.asset(
-                  "images/Qiblah.png",
+                  "images/Qiblatun_Logo.png",
                   height: 30,
                   width: 30,
                 ),
@@ -115,6 +117,22 @@ class _MoreFeaturesState extends State<MoreFeatures> {
             ),
             // Text('Qiblah'),
             value: MenuFeatures.Qiblah,
+          ),
+          PopupMenuItem(
+            child: Row(
+              children: [
+                Icon(
+                  Icons.watch_later_outlined,
+                  color: Color(hexColor('#216353')),
+                  size: 30,
+                ),
+                Padding(
+                  padding: EdgeInsets.all(5),
+                ),
+                Text('Waktu'),
+              ],
+            ),
+            value: MenuFeatures.Waktu,
           ),
           PopupMenuItem(
             child: Row(
@@ -137,8 +155,8 @@ class _MoreFeaturesState extends State<MoreFeatures> {
             child: Row(
               children: [
                 Icon(
-                  Icons.info,
-                  color: Colors.black,
+                  Icons.info_outline,
+                  color: Color(hexColor('#216353')),
                   size: 30,
                 ),
                 Padding(
@@ -150,6 +168,14 @@ class _MoreFeaturesState extends State<MoreFeatures> {
             value: MenuFeatures.About,
           ),
         ];
+      },
+      onSelected: (result) {
+        if (result == MenuFeatures.Qiblah) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Qiblah()),
+          );
+        }
       },
     );
   }
