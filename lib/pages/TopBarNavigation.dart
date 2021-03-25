@@ -3,6 +3,7 @@
 // sarta tarbilanga kami dayng ha mga Mukhliseen. Ameen
 import 'package:flutter/material.dart';
 import 'package:tausug_tafseer/pages/Juz.dart';
+import 'package:tausug_tafseer/pages/Masajid.dart';
 import 'package:tausug_tafseer/pages/Pangindanan.dart';
 import 'package:tausug_tafseer/pages/Qiblah.dart';
 import 'package:tausug_tafseer/pages/Surah.dart';
@@ -105,7 +106,7 @@ class _MoreFeaturesState extends State<MoreFeatures> {
             child: Row(
               children: [
                 Image.asset(
-                  "images/Qiblatun_Logo.png",
+                  "images/Qiblah.png",
                   height: 30,
                   width: 30,
                 ),
@@ -138,7 +139,7 @@ class _MoreFeaturesState extends State<MoreFeatures> {
             child: Row(
               children: [
                 Image.asset(
-                  "images/Masajid.png",
+                  "images/Masjid_Marker.png",
                   height: 30,
                   width: 30,
                 ),
@@ -174,6 +175,11 @@ class _MoreFeaturesState extends State<MoreFeatures> {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => Qiblah()),
+          );
+        } else if (result == MenuFeatures.Masajid) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Masajid()),
           );
         }
       },
