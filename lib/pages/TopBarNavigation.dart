@@ -7,6 +7,7 @@ import 'package:tausug_tafseer/pages/Masajid.dart';
 import 'package:tausug_tafseer/pages/Pangindanan.dart';
 import 'package:tausug_tafseer/pages/Qiblah.dart';
 import 'package:tausug_tafseer/pages/Surah.dart';
+import 'package:tausug_tafseer/pages/Waktu.dart';
 import 'package:tausug_tafseer/style/Hex.dart';
 
 class Homepage extends StatefulWidget {
@@ -175,6 +176,11 @@ class _MoreFeaturesState extends State<MoreFeatures> {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => Qiblah()),
+          );
+        } else if (result == MenuFeatures.Waktu) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Waktu()),
           );
         } else if (result == MenuFeatures.Masajid) {
           Navigator.push(
