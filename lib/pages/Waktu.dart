@@ -336,7 +336,7 @@ class _WaktuState extends State<Waktu> {
           if (locationError != null) {
             return Text(locationError);
           }
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator());
         },
       )),
     );

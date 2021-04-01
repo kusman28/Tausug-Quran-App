@@ -61,6 +61,7 @@ class _SurahTafseerState extends State<SurahTafseer> {
           future: ServiceData().loadSurahTafseer(widget.index),
           builder: (c, snapshot) {
             // var myDatabase = Provider.of<DBHelper>(context);
+
             var surah = snapshot.data;
             // new Image.asset('images/basmalah.png');
             // Container(
@@ -114,6 +115,24 @@ class _SurahTafseerState extends State<SurahTafseer> {
                       itemCount: snapshot.data.text.length,
                       itemBuilder: (BuildContext c, int i) {
                         String key = snapshot.data.text.keys.elementAt(i);
+
+                        bool _isFavorited = true;
+                        void _toggleFavorite() {
+                          setState(() {
+                            if (_isFavorited) {
+                              Bookmarks e =
+                                  Bookmarks(null, snapshot.data.text[key]);
+                              DBHelper.ddb.save(e);
+                              print(snapshot.data.text[key]);
+                              _isFavorited = false;
+                            } else {
+                              // DBHelper.ddb.delete(ayat.id);
+                              print(snapshot.data.text[key]);
+                              _isFavorited = true;
+                            }
+                          });
+                        }
+
                         return Padding(
                           // padding: const EdgeInsets.fromLTRB(18, 10, 15, 10),
                           padding: const EdgeInsets.all(15),
@@ -201,31 +220,45 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                     style: TextStyle(color: Colors.grey[300]),
                                   ),
                                   IconButton(
-                                      // icon: new Icon(Icons.bookmark_border),
-                                      icon: Icon(
-                                        _selectedIndex != null &&
-                                                _selectedIndex ==
-                                                    snapshot.data.translations
-                                                        .id.text[key]
-                                            ? Icons.bookmark
-                                            : Icons.bookmark_border,
-                                        color: _selectedIndex != null &&
-                                                _selectedIndex ==
-                                                    snapshot.data.translations
-                                                        .id.text[key]
-                                            ? Colors.blue
-                                            : Colors.grey,
-                                      ),
-                                      onPressed: () {
-                                        _onSelected(snapshot, key);
-                                        _scaffoldKey.currentState
-                                            .showSnackBar(SnackBar(
-                                          content: Text('Added to Pangindanan'),
-                                          backgroundColor:
-                                              Color(hexColor('#373a40')),
-                                          duration: Duration(seconds: 1),
-                                        ));
-                                      }),
+                                    // icon: new Icon(Icons.bookmark_border),
+                                    icon: (_isFavorited
+                                        ? Icon(Icons.bookmark_border)
+                                        : Icon(Icons.bookmark)),
+                                    color: Colors.blue[500],
+                                    // icon: Icon(
+                                    //   i != null &&
+                                    //           i ==
+                                    //               snapshot.data.translations
+                                    //                   .id.text[key]
+                                    //       ? Icons.bookmark
+                                    //       : Icons.bookmark_border,
+                                    //   color: i != null &&
+                                    //           i ==
+                                    //               snapshot.data.translations
+                                    //                   .id.text[key]
+                                    //       ? Colors.blue
+                                    //       : Colors.grey,
+                                    // ),
+                                    onPressed: _toggleFavorite,
+                                    // onPressed: () {
+
+                                    //   // _onSelected(snapshot, key);
+                                    //   // Bookmarks e = Bookmarks(
+                                    //   //     i, snapshot.data.text[key]);
+                                    //   // DBHelper.ddb.save(e);
+                                    //   // print(i);
+
+                                    //   setState(() {});
+
+                                    //   _scaffoldKey.currentState
+                                    //       .showSnackBar(SnackBar(
+                                    //     content: Text('Added to Pangindanan'),
+                                    //     backgroundColor:
+                                    //         Color(hexColor('#373a40')),
+                                    //     duration: Duration(seconds: 1),
+                                    //   ));
+                                    // }
+                                  ),
                                 ],
                               ),
                             ],
@@ -241,17 +274,16 @@ class _SurahTafseerState extends State<SurahTafseer> {
         ));
   }
 
-  String _selectedIndex;
-  void _onSelected(snapshot, key) {
-    _selectedIndex = snapshot.data.text[key];
-    // + '\n' +
-    //     snapshot.data.translations.id.text[key];
-    Bookmarks e = Bookmarks(null, _selectedIndex);
-    DBHelper.ddb.save(e);
-    print(_selectedIndex);
-    // setState(() {
-    // });
-  }
+  // String _selectedIndex;
+  // void _onSelected(snapshot, key) {
+  //   _selectedIndex = snapshot.data.text[key];
+  //   // + '\n' +
+  //   //     snapshot.data.translations.id.text[key];
+  //   Bookmarks e = Bookmarks(null, _selectedIndex);
+  //   DBHelper.ddb.save(e);
+  //   print(_selectedIndex);
+  //   // setState(() {});
+  // }
 
   void _onButtonPressed(snapshot, key) {
     // String key = snapshot.data.text.keys.elementAt(i);
