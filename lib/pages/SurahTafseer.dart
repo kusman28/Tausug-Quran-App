@@ -123,11 +123,11 @@ class _SurahTafseerState extends State<SurahTafseer> {
                               Bookmarks e =
                                   Bookmarks(null, snapshot.data.text[key]);
                               DBHelper.ddb.save(e);
-                              print(snapshot.data.text[key]);
+                              print(i);
                               _isFavorited = false;
                             } else {
                               // DBHelper.ddb.delete(ayat.id);
-                              print(snapshot.data.text[key]);
+                              print(i);
                               _isFavorited = true;
                             }
                           });
@@ -219,6 +219,7 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                     '|',
                                     style: TextStyle(color: Colors.grey[300]),
                                   ),
+                                  // _pangindananBtn()
                                   IconButton(
                                     // icon: new Icon(Icons.bookmark_border),
                                     icon: (_isFavorited
@@ -258,7 +259,8 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                     //     duration: Duration(seconds: 1),
                                     //   ));
                                     // }
-                                  ),
+                                    // ),
+                                  )
                                 ],
                               ),
                             ],
@@ -318,4 +320,33 @@ class _SurahTafseerState extends State<SurahTafseer> {
       ],
     );
   }
+
+  @override
+  Widget _pangindananBtn() {
+    var ui = Provider.of<UI>(context);
+    return IconButton(
+      icon: Icon(Icons.bookmark),
+      onPressed: () {},
+    );
+  }
+
+  // @override
+  // Widget _pangindananBtn() {
+  //   var ui = Provider.of<UI>(context);
+  //   return Scaffold(
+  //     body: FutureBuilder<List<Bookmarks>>(
+  //       future: DBHelper.ddb.getPangindanan(),
+  //       // stream: myDatabase.getEmployees().asStream(),
+  //       builder: (context, AsyncSnapshot<List<Bookmarks>> snapshot) {
+  //         return snapshot.hasData
+  //             ? IconButton(
+  //                 icon: Icon(Icons.delete),
+  //                 onPressed: () {
+  //                   setState(() => {});
+  //                 })
+  //             : Center(child: CircularProgressIndicator());
+  //       },
+  //     ),
+  //   );
+  // }
 }
