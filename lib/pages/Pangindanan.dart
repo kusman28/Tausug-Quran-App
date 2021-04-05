@@ -51,7 +51,6 @@ class _PangindananState extends State<Pangindanan> {
                           icon: Icon(Icons.delete),
                           onPressed: () {
                             DBHelper.ddb.delete(ayat.id);
-                            // TODO(fitza): verify that this is or isn't best practice
                             setState(() => {});
                           }),
                       onTap: () {
@@ -59,7 +58,7 @@ class _PangindananState extends State<Pangindanan> {
                         //     context,
                         //     MaterialPageRoute(
                         //         builder: (context) =>
-                        //             HackerNewsWebPage(article.url)));
+                        //             Test(ayat.id)));
                       },
                     );
                   })

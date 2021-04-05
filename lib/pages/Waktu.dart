@@ -3,6 +3,7 @@
 // sarta tarbilanga kami dayng ha mga Mukhliseen. Ameen
 import 'package:flutter/material.dart';
 import 'package:adhan/adhan.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,7 @@ class Waktu extends StatefulWidget {
 }
 
 class _WaktuState extends State<Waktu> {
+  // FlutterLocalNotificationsPlugin fltrNotification;
   final location = new Location();
   String locationError;
   PrayerTimes prayerTimes;
@@ -62,10 +64,59 @@ class _WaktuState extends State<Waktu> {
     return await location.getLocation();
   }
 
+  // Future _showNotif() async {
+  //   var androidDetails = new AndroidNotificationDetails(
+  //       'Channel ID', 'Waktu', 'Salah',
+  //       importance: Importance.Max);
+  //   var iOSDetails = new IOSNotificationDetails();
+  //   var generalNotif = new NotificationDetails(androidDetails, iOSDetails);
+  //   var now = DateTime.now();
+  //   var sched = DateTime.now().add(Duration(seconds: 5));
+  //   flutterLocalNotificationsPlugin.schedule(
+  //       1, 'Test', '123', sched, generalNotif);
+  //   // await flutterLocalNotificationsPlugin.show(
+  //   //     0, 'Sambahayang Isha', 'Waktu na sin Salatul-Isha.', generalNotif);
+  //   // if (DateFormat.jm().format(now) ==
+  //   //     DateFormat.jm().format(prayerTimes.isha)) {
+  //   //   flutterLocalNotificationsPlugin.schedule(
+  //   //       1, 'Test', '123', sched, generalNotif);
+  //   // }
+  // }
+
   @override
   Widget build(BuildContext context) {
     var ui = Provider.of<UI>(context);
     var now = DateTime.now();
+
+    // var androidDetails = new AndroidNotificationDetails(
+    //     'Channel ID', 'Waktu', 'Salah',
+    //     playSound: true,
+    //     sound: RawResourceAndroidNotificationSound('adhan'),
+    //     importance: Importance.Max);
+    // var iOSDetails = new IOSNotificationDetails();
+    // var generalNotif = new NotificationDetails(androidDetails, iOSDetails);
+    // var sched = DateTime.now().add(Duration(seconds: 1));
+    // if (prayerTimes != null) {
+    //   if (DateFormat.jm().format(now) ==
+    //       DateFormat.jm().format(prayerTimes.maghrib)) {
+    //     flutterLocalNotificationsPlugin.schedule(
+    //         1,
+    //         'Salatul-Maghrib',
+    //         'Yā kaw taymanghud, Waktu na sin Sambahayang Maghrib.',
+    //         sched,
+    //         generalNotif);
+    //   }
+
+    //   if (DateFormat.jm().format(now) ==
+    //       DateFormat.jm().format(prayerTimes.isha)) {
+    //     flutterLocalNotificationsPlugin.schedule(
+    //         1,
+    //         'Salatul-Ishā',
+    //         'Yā kaw taymanghud, Waktu na sin Sambahayang Ishā.',
+    //         sched,
+    //         generalNotif);
+    //   }
+    // }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -97,6 +148,14 @@ class _WaktuState extends State<Waktu> {
                               fontSize: ui.fontSize,
                             ),
                           ),
+                          subtitle: Text(
+                            'الفجر',
+                            style: TextStyle(
+                              fontFamily: 'Arabic',
+                              fontSize: ui.fontSize,
+                              height: 0.5,
+                            ),
+                          ),
                           trailing: Text(
                             DateFormat.jm().format(prayerTimes.fajr),
                             style: TextStyle(
@@ -113,10 +172,18 @@ class _WaktuState extends State<Waktu> {
                                 AssetImage('images/Waktu_Fajr.png'),
                           ),
                           title: Text(
-                            'Fajr / الفجر',
+                            'Fajr',
                             style: TextStyle(
                               fontFamily: 'Arabic',
                               fontSize: ui.fontSize,
+                            ),
+                          ),
+                          subtitle: Text(
+                            'الفجر',
+                            style: TextStyle(
+                              fontFamily: 'Arabic',
+                              fontSize: ui.fontSize,
+                              height: 0.5,
                             ),
                           ),
                           trailing: Text(
@@ -139,10 +206,18 @@ class _WaktuState extends State<Waktu> {
                                 AssetImage('images/Waktu_Dhuhr.png'),
                           ),
                           title: Text(
-                            'Dhuhr / الظهر',
+                            'Dhuhr',
                             style: TextStyle(
                               fontFamily: 'Arabic',
                               fontSize: ui.fontSize,
+                            ),
+                          ),
+                          subtitle: Text(
+                            'الظهر',
+                            style: TextStyle(
+                              fontFamily: 'Arabic',
+                              fontSize: ui.fontSize,
+                              height: 0.5,
                             ),
                           ),
                           trailing: Text(
@@ -161,10 +236,18 @@ class _WaktuState extends State<Waktu> {
                                 AssetImage('images/Waktu_Dhuhr.png'),
                           ),
                           title: Text(
-                            'Dhuhr / الظهر',
+                            'Dhuhr',
                             style: TextStyle(
                               fontFamily: 'Arabic',
                               fontSize: ui.fontSize,
+                            ),
+                          ),
+                          subtitle: Text(
+                            'الظهر',
+                            style: TextStyle(
+                              fontFamily: 'Arabic',
+                              fontSize: ui.fontSize,
+                              height: 0.5,
                             ),
                           ),
                           trailing: Text(
@@ -186,10 +269,18 @@ class _WaktuState extends State<Waktu> {
                             backgroundImage: AssetImage('images/Waktu_Asr.png'),
                           ),
                           title: Text(
-                            'Asr / العصر',
+                            'Asr',
                             style: TextStyle(
                               fontFamily: 'Arabic',
                               fontSize: ui.fontSize,
+                            ),
+                          ),
+                          subtitle: Text(
+                            'العصر',
+                            style: TextStyle(
+                              fontFamily: 'Arabic',
+                              fontSize: ui.fontSize,
+                              height: 0.5,
                             ),
                           ),
                           trailing: Text(
@@ -207,10 +298,18 @@ class _WaktuState extends State<Waktu> {
                             backgroundImage: AssetImage('images/Waktu_Asr.png'),
                           ),
                           title: Text(
-                            'Asr / العصر',
+                            'Asr',
                             style: TextStyle(
                               fontFamily: 'Arabic',
                               fontSize: ui.fontSize,
+                            ),
+                          ),
+                          subtitle: Text(
+                            'العصر',
+                            style: TextStyle(
+                              fontFamily: 'Arabic',
+                              fontSize: ui.fontSize,
+                              height: 0.5,
                             ),
                           ),
                           trailing: Text(
@@ -232,10 +331,18 @@ class _WaktuState extends State<Waktu> {
                                 AssetImage('images/Waktu_Maghrib.png'),
                           ),
                           title: Text(
-                            'Maghrib / المغرب',
+                            'Maghrib',
                             style: TextStyle(
                               fontFamily: 'Arabic',
                               fontSize: ui.fontSize,
+                            ),
+                          ),
+                          subtitle: Text(
+                            'المغرب',
+                            style: TextStyle(
+                              fontFamily: 'Arabic',
+                              fontSize: ui.fontSize,
+                              height: 0.5,
                             ),
                           ),
                           trailing: Text(
@@ -254,10 +361,18 @@ class _WaktuState extends State<Waktu> {
                                 AssetImage('images/Waktu_Maghrib.png'),
                           ),
                           title: Text(
-                            'Maghrib / المغرب',
+                            'Maghrib',
                             style: TextStyle(
                               fontFamily: 'Arabic',
                               fontSize: ui.fontSize,
+                            ),
+                          ),
+                          subtitle: Text(
+                            'المغرب',
+                            style: TextStyle(
+                              fontFamily: 'Arabic',
+                              fontSize: ui.fontSize,
+                              height: 0.5,
                             ),
                           ),
                           trailing: Text(
@@ -280,10 +395,18 @@ class _WaktuState extends State<Waktu> {
                                 AssetImage('images/Waktu_Isha.png'),
                           ),
                           title: Text(
-                            'Isha / العشاء',
+                            '`Isha',
                             style: TextStyle(
                               fontFamily: 'Arabic',
                               fontSize: ui.fontSize,
+                            ),
+                          ),
+                          subtitle: Text(
+                            'العشاء',
+                            style: TextStyle(
+                              fontFamily: 'Arabic',
+                              fontSize: ui.fontSize,
+                              height: 0.5,
                             ),
                           ),
                           trailing: Text(
@@ -302,10 +425,18 @@ class _WaktuState extends State<Waktu> {
                                 AssetImage('images/Waktu_Isha.png'),
                           ),
                           title: Text(
-                            'Isha / العشاء',
+                            'Isha',
                             style: TextStyle(
                               fontFamily: 'Arabic',
                               fontSize: ui.fontSize,
+                            ),
+                          ),
+                          subtitle: Text(
+                            'العشاء',
+                            style: TextStyle(
+                              fontFamily: 'Arabic',
+                              fontSize: ui.fontSize,
+                              height: 0.5,
                             ),
                           ),
                           trailing: Text(
@@ -316,7 +447,10 @@ class _WaktuState extends State<Waktu> {
                           ),
                         ),
                       ),
-
+                // RaisedButton(
+                //   child: Text('Test123'),
+                //   onPressed: () {},
+                // )
                 // Text(
                 //   'Prayer Times for Today',
                 //   textAlign: TextAlign.center,
@@ -336,9 +470,34 @@ class _WaktuState extends State<Waktu> {
           if (locationError != null) {
             return Text(locationError);
           }
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator());
         },
       )),
     );
   }
+
+  // void scheduleAlarm(
+  //     DateTime scheduledNotificationDateTime, AlarmInfo alarmInfo) async {
+  //   var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+  //     'alarm_notif',
+  //     'alarm_notif',
+  //     'Channel for Alarm notification',
+  //     icon: 'logo_nav',
+  //     sound: RawResourceAndroidNotificationSound('a_long_cold_sting'),
+  //     largeIcon: DrawableResourceAndroidBitmap('logo_nav'),
+  //   );
+
+  //   var iOSPlatformChannelSpecifics = IOSNotificationDetails(
+  //       sound: 'a_long_cold_sting.wav',
+  //       presentAlert: true,
+  //       presentBadge: true,
+  //       presentSound: true);
+  //   var platformChannelSpecifics = NotificationDetails(
+  //       androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+
+  //   await flutterLocalNotificationsPlugin.schedule(0, 'Office', alarmInfo.title,
+  //       scheduledNotificationDateTime, platformChannelSpecifics);
+  // }
+  //
+  Future notificationSelected(String payload) async {}
 }
