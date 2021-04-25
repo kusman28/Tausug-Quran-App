@@ -41,15 +41,17 @@ class _SurahTafseerState extends State<SurahTafseer> {
               Text(widget.detail),
               Text(
                 widget.tafsir,
-                style:
-                    TextStyle(fontSize: 13, color: Color(hexColor('d9e4dd'))),
+                style: TextStyle(
+                    fontSize: 13,
+                    fontFamily: 'Arabic',
+                    color: Color(hexColor('d9e4dd'))),
               )
             ],
           ),
           elevation: 0.0,
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.more_vert),
+              icon: Icon(Icons.search),
               onPressed: () {
                 // Navigator.push(context,
                 //     MaterialPageRoute(builder: (context) => Settings()));

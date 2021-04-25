@@ -1,0 +1,37 @@
+[
+    {
+        "city": "Zamboanga",
+        "location": "Recodo",
+        "masjid": "Darus-Salam",
+        "lat": 6.954197,
+        "long":  121.9599458
+    },
+    {
+        "city": "Zamboanga",
+        "location": "Recodo",
+        "masjid": "Lappasan",
+        "lat": 6.9548033,
+        "long":  121.9598906
+    },
+    {
+        "city": "Zamboanga",
+        "location": "Recodo",
+        "masjid": "Kasalamatan",
+        "lat": 6.9536097,
+        "long":  121.9603251
+    },
+    {
+        "city": "Zamboanga",
+        "location": "Recodo",
+        "masjid": "Awwal",
+        "lat": 6.9536097,
+        "long":  121.9603251
+    },
+    {
+        "city": "Zamboanga",
+        "location": "Recodo",
+        "masjid": "Lanjang",
+        "lat": 6.9532783,
+        "long":  121.9602644
+    }
+]

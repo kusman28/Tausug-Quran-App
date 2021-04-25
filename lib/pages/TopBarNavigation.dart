@@ -2,6 +2,7 @@
 // O' Tuhan namu papag-barakata kamu in Application ini
 // sarta tarbilanga kami dayng ha mga Mukhliseen. Ameen
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tausug_tafseer/pages/Juz.dart';
 import 'package:tausug_tafseer/pages/Masajid.dart';
 import 'package:tausug_tafseer/pages/Pangindanan.dart';
@@ -9,6 +10,8 @@ import 'package:tausug_tafseer/pages/Qiblah.dart';
 import 'package:tausug_tafseer/pages/Surah.dart';
 import 'package:tausug_tafseer/pages/Waktu.dart';
 import 'package:tausug_tafseer/style/Hex.dart';
+
+import '../main.dart';
 
 class Homepage extends StatefulWidget {
   @override
@@ -98,97 +101,121 @@ class MoreFeatures extends StatefulWidget {
 }
 
 class _MoreFeaturesState extends State<MoreFeatures> {
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+          context: context,
+          builder: (context) => new AlertDialog(
+            title: new Text('Siguru na kaw?'),
+            content: new Text('Mabaya mu i-exit in Tausug Quran'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: new Text('Ayaw'),
+              ),
+              TextButton(
+                onPressed: () => SystemNavigator.pop(),
+                child: new Text('Huun'),
+              ),
+            ],
+          ),
+        )) ??
+        false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton<MenuFeatures>(
-      itemBuilder: (BuildContext context) {
-        return <PopupMenuEntry<MenuFeatures>>[
-          PopupMenuItem(
-            child: Row(
-              children: [
-                Image.asset(
-                  "images/Qiblah.png",
-                  height: 30,
-                  width: 30,
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5),
-                ),
-                Text('Qiblah'),
-              ],
+    return new WillPopScope(
+      onWillPop: _onWillPop,
+      child: PopupMenuButton<MenuFeatures>(
+        itemBuilder: (BuildContext context) {
+          return <PopupMenuEntry<MenuFeatures>>[
+            PopupMenuItem(
+              child: Row(
+                children: [
+                  Image.asset(
+                    "images/Qiblah.png",
+                    height: 30,
+                    width: 30,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(5),
+                  ),
+                  Text('Qiblah'),
+                ],
+              ),
+              // Text('Qiblah'),
+              value: MenuFeatures.Qiblah,
             ),
-            // Text('Qiblah'),
-            value: MenuFeatures.Qiblah,
-          ),
-          PopupMenuItem(
-            child: Row(
-              children: [
-                Icon(
-                  Icons.watch_later_outlined,
-                  color: Color(hexColor('#216353')),
-                  size: 30,
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5),
-                ),
-                Text('Waktu'),
-              ],
+            PopupMenuItem(
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.watch_later_outlined,
+                    color: Color(hexColor('#216353')),
+                    size: 30,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(5),
+                  ),
+                  Text('Waktu'),
+                ],
+              ),
+              value: MenuFeatures.Waktu,
             ),
-            value: MenuFeatures.Waktu,
-          ),
-          PopupMenuItem(
-            child: Row(
-              children: [
-                Image.asset(
-                  "images/Masjid_Marker.png",
-                  height: 30,
-                  width: 30,
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5),
-                ),
-                Text('Masājid'),
-              ],
+            PopupMenuItem(
+              child: Row(
+                children: [
+                  Image.asset(
+                    "images/Masjid_Marker.png",
+                    height: 30,
+                    width: 30,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(5),
+                  ),
+                  Text('Masājid'),
+                ],
+              ),
+              value: MenuFeatures.Masajid,
             ),
-            value: MenuFeatures.Masajid,
-          ),
-          PopupMenuDivider(),
-          PopupMenuItem(
-            child: Row(
-              children: [
-                Icon(
-                  Icons.info_outline,
-                  color: Color(hexColor('#216353')),
-                  size: 30,
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5),
-                ),
-                Text('About'),
-              ],
+            PopupMenuDivider(),
+            PopupMenuItem(
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.info_outline,
+                    color: Color(hexColor('#216353')),
+                    size: 30,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(5),
+                  ),
+                  Text('About'),
+                ],
+              ),
+              value: MenuFeatures.About,
             ),
-            value: MenuFeatures.About,
-          ),
-        ];
-      },
-      onSelected: (result) {
-        if (result == MenuFeatures.Qiblah) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Qiblah()),
-          );
-        } else if (result == MenuFeatures.Waktu) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Waktu()),
-          );
-        } else if (result == MenuFeatures.Masajid) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Masajid()),
-          );
-        }
-      },
+          ];
+        },
+        onSelected: (result) {
+          if (result == MenuFeatures.Qiblah) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Qiblah()),
+            );
+          } else if (result == MenuFeatures.Waktu) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Waktu()),
+            );
+          } else if (result == MenuFeatures.Masajid) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Masajid()),
+            );
+          }
+        },
+      ),
     );
   }
 }

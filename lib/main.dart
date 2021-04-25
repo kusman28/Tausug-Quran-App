@@ -3,16 +3,15 @@
 // sarta tarbilanga kami dayng ha mga Mukhliseen. Ameen
 import 'dart:async';
 
-import 'package:adhan/adhan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:intl/intl.dart';
-import 'package:location/location.dart';
 import 'package:tausug_tafseer/pages/Qiblah.dart';
 import 'package:tausug_tafseer/pages/TopBarNavigation.dart';
 import 'package:tausug_tafseer/style/Hex.dart';
 import 'package:provider/provider.dart';
 import 'package:tausug_tafseer/style/UI.dart';
+import 'package:flutter/services.dart';
+import 'package:introduction_screen/introduction_screen.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -45,119 +44,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final location = new Location();
-
-  String locationError;
-
-  PrayerTimes prayerTimes;
-
-  @override
-  void initState() {
-    getLocationData().then((locationData) {
-      if (!mounted) {
-        return;
-      }
-      if (locationData != null) {
-        setState(() {
-          prayerTimes = PrayerTimes(
-              Coordinates(locationData.latitude, locationData.longitude),
-              DateComponents.from(DateTime.now()),
-              CalculationMethod.karachi.getParameters());
-        });
-      } else {
-        setState(() {
-          locationError = "Couldn't Get Your Location!";
-        });
-      }
-    });
-
-    super.initState();
-  }
-
-  Future<LocationData> getLocationData() async {
-    var _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return null;
-      }
-    }
-
-    var _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return null;
-      }
-    }
-
-    return await location.getLocation();
-  }
-
   @override
   Widget build(BuildContext context) {
-    var now = DateTime.now();
-
-    var androidDetails = new AndroidNotificationDetails(
-        'Channel ID', 'Waktu', 'Salah',
-        playSound: true,
-        sound: RawResourceAndroidNotificationSound('adhan'),
-        priority: Priority.High,
-        importance: Importance.Max);
-    var iOSDetails = new IOSNotificationDetails();
-    var generalNotif = new NotificationDetails(androidDetails, iOSDetails);
-    var sched = DateTime.now().add(Duration(seconds: 1));
-    if (prayerTimes != null) {
-      if (DateFormat.jm().format(now) ==
-          DateFormat.jm().format(prayerTimes.fajr)) {
-        flutterLocalNotificationsPlugin.schedule(
-            1,
-            'Salatul-Fajr',
-            'Yā kaw taymanghud, Waktu na sin Sambahayang Fajr.',
-            sched,
-            generalNotif);
-      }
-
-      if (DateFormat.jm().format(now) ==
-          DateFormat.jm().format(prayerTimes.dhuhr)) {
-        flutterLocalNotificationsPlugin.schedule(
-            1,
-            'Salatud-Dhuhr',
-            'Yā kaw taymanghud, Waktu na sin Sambahayang Dhuhr.',
-            sched,
-            generalNotif);
-      }
-
-      if (DateFormat.jm().format(now) ==
-          DateFormat.jm().format(prayerTimes.asr)) {
-        flutterLocalNotificationsPlugin.schedule(
-            1,
-            'Salatul-Asr',
-            'Yā kaw taymanghud, Waktu na sin Sambahayang Asr.',
-            sched,
-            generalNotif);
-      }
-
-      if (DateFormat.jm().format(now) ==
-          DateFormat.jm().format(prayerTimes.maghrib)) {
-        flutterLocalNotificationsPlugin.schedule(
-            1,
-            'Salatul-Maghrib',
-            'Yā kaw taymanghud, Waktu na sin Sambahayang Maghrib.',
-            sched,
-            generalNotif);
-      }
-
-      if (DateFormat.jm().format(now) ==
-          DateFormat.jm().format(prayerTimes.isha)) {
-        flutterLocalNotificationsPlugin.schedule(
-            1,
-            'Salatul-Ishā',
-            'Yā kaw taymanghud, Waktu na sin Sambahayang Ishā.',
-            sched,
-            generalNotif);
-      }
-    }
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
+    );
     return MaterialApp(
       title: 'Tausug Quran',
       debugShowCheckedModeBanner: false,
@@ -165,12 +56,123 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.green,
         primaryColor: Color(hexColor('#216353')),
       ),
-      home: new SplashScreen(),
+      home: new OnBoardingPage(),
       initialRoute: '/',
       routes: {
         '/Homepage': (context) => Homepage(),
         '/Qiblah': (context) => Qiblah()
       },
+    );
+  }
+}
+
+class OnBoardingPage extends StatefulWidget {
+  @override
+  _OnBoardingPageState createState() => _OnBoardingPageState();
+}
+
+class _OnBoardingPageState extends State<OnBoardingPage> {
+  final introKey = GlobalKey<IntroductionScreenState>();
+
+  void _onIntroEnd(context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => SplashScreen()),
+    );
+  }
+
+  Widget _buildImage(String assetName) {
+    return Align(
+      child: Image.asset('images/$assetName.jpg', width: 350.0),
+      alignment: Alignment.bottomCenter,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    const bodyStyle = TextStyle(fontSize: 19.0);
+    const pageDecoration = const PageDecoration(
+      titleTextStyle: TextStyle(
+          fontSize: 28.0, fontWeight: FontWeight.w700, fontFamily: 'Arabic'),
+      bodyTextStyle: bodyStyle,
+      descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+      pageColor: Colors.white,
+      imagePadding: EdgeInsets.zero,
+    );
+
+    return IntroductionScreen(
+      key: introKey,
+      pages: [
+        PageViewModel(
+          title: "Tausug Quran",
+          body: "Maana sin Quran Mahamulliya ha Bahasa Sug.",
+          image: Center(
+            child: Image.asset("images/logo_nav.png", height: 175.0),
+          ),
+          decoration: pageDecoration,
+        ),
+        PageViewModel(
+          title: "Qiblah",
+          body: "Ingatun natu' bang dapit pakain in Qiblah.",
+          image: _buildImage('slider_4'),
+          decoration: pageDecoration,
+        ),
+        PageViewModel(
+          title: "Masajid",
+          body: "Ingatun natu' in mga kamasjiran masuuk pa Qawman.",
+          image: _buildImage('slider_1'),
+          decoration: pageDecoration,
+        ),
+        PageViewModel(
+          title: "Al-Quran Al-Kareem",
+          body: "Bassahun natu' in Quran Mahamulliya sarta iban maana niya.",
+          image: _buildImage('slider_2'),
+          footer: RaisedButton(
+            onPressed: () {
+              introKey.currentState?.animateScroll(0);
+            },
+            child: const Text(
+              'Panagnaan',
+              style: TextStyle(color: Colors.white),
+            ),
+            color: Colors.green,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(3.0),
+            ),
+          ),
+          decoration: pageDecoration,
+        ),
+        PageViewModel(
+          title: "Waktu",
+          body: "Ingatun natu' in mga waktu sin Sambahayang.",
+          // bodyWidget: Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: const [
+          //     Text("Ingatun natu in Waktu sin mga Sambahayang.",
+          //         style: bodyStyle),
+          //     Icon(Icons.edit),
+          //     Text(" to edit a post", style: bodyStyle),
+          //   ],
+          // ),
+          image: _buildImage('slider_3'),
+          decoration: pageDecoration,
+        ),
+      ],
+      onDone: () => _onIntroEnd(context),
+      //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
+      showSkipButton: true,
+      skipFlex: 0,
+      nextFlex: 0,
+      skip: const Text('Skip'),
+      next: const Icon(Icons.arrow_forward),
+      done: const Text('Done', style: TextStyle(fontWeight: FontWeight.w600)),
+      dotsDecorator: const DotsDecorator(
+        size: Size(7.0, 7.0),
+        color: Color(0xFFBDBDBD),
+        activeSize: Size(22.0, 10.0),
+        activeShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+        ),
+      ),
     );
   }
 }
@@ -221,7 +223,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                 ),
                 Text(
-                  'Tafseer Maana sin',
+                  'Maana sin',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,

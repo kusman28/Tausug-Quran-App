@@ -2,13 +2,13 @@
 // O' Tuhan namu papag-barakata kamu in Application ini
 // sarta tarbilanga kami dayng ha mga Mukhliseen. Ameen
 import 'package:flutter/material.dart';
-import 'package:adhan/adhan.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:tausug_tafseer/style/Hex.dart';
 import 'package:tausug_tafseer/style/UI.dart';
+import 'package:adhan/adhan.dart';
 
 class Waktu extends StatefulWidget {
   @override
@@ -16,6 +16,8 @@ class Waktu extends StatefulWidget {
 }
 
 class _WaktuState extends State<Waktu> {
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      new FlutterLocalNotificationsPlugin();
   // FlutterLocalNotificationsPlugin fltrNotification;
   final location = new Location();
   String locationError;
@@ -32,7 +34,7 @@ class _WaktuState extends State<Waktu> {
           prayerTimes = PrayerTimes(
               Coordinates(locationData.latitude, locationData.longitude),
               DateComponents.from(DateTime.now()),
-              CalculationMethod.karachi.getParameters());
+              CalculationMethod.muslim_world_league.getParameters());
         });
       } else {
         setState(() {
@@ -40,9 +42,142 @@ class _WaktuState extends State<Waktu> {
         });
       }
     });
-
+    // _fajrNotif();
+    // _dhuhurNotif();
+    // _asrNotif();
+    // _maghribNotif();
+    _salahNotif();
     super.initState();
   }
+
+  void _salahNotif() async {
+    // var wew = DateFormat.jm().format(prayerTimes.asr);
+    // DateFormat('h:mm:ss').format(prayerTimes.fajr);
+    var subuh = new Time(prayerTimes.fajr.hour, prayerTimes.fajr.minute,
+        prayerTimes.fajr.second);
+    var luhur = new Time(prayerTimes.dhuhr.hour, prayerTimes.dhuhr.minute,
+        prayerTimes.dhuhr.second);
+    var asar = new Time(
+        prayerTimes.asr.hour, prayerTimes.asr.minute, prayerTimes.asr.second);
+    var maghrib = new Time(prayerTimes.maghrib.hour, prayerTimes.maghrib.minute,
+        prayerTimes.maghrib.second);
+    var isya = new Time(prayerTimes.isha.hour, prayerTimes.isha.minute,
+        prayerTimes.isha.second);
+
+    var androidDetails = new AndroidNotificationDetails('1', 'Waktu', 'Salah',
+        playSound: true,
+        sound: RawResourceAndroidNotificationSound('adhan'),
+        importance: Importance.Max);
+    var iOSDetails = new IOSNotificationDetails();
+    var generalNotif = new NotificationDetails(androidDetails, iOSDetails);
+
+    await flutterLocalNotificationsPlugin.showDailyAtTime(
+        1,
+        'Salatul-Fajr',
+        'Yā kaw taymanghud, Waktu na sin Sambahayang Subuh.',
+        subuh,
+        generalNotif);
+
+    await flutterLocalNotificationsPlugin.showDailyAtTime(
+        2,
+        'Salatud-Dhuhr',
+        'Yā kaw taymanghud, Waktu na sin Sambahayang Luhur.',
+        luhur,
+        generalNotif);
+
+    await flutterLocalNotificationsPlugin.showDailyAtTime(
+        3,
+        'Salatul-Asr',
+        'Yā kaw taymanghud, Waktu na sin Sambahayang Asar.',
+        asar,
+        generalNotif);
+
+    await flutterLocalNotificationsPlugin.showDailyAtTime(
+        4,
+        'Salatul-Maghrib',
+        'Yā kaw taymanghud, Waktu na sin Sambahayang Maghrib.',
+        maghrib,
+        generalNotif);
+
+    await flutterLocalNotificationsPlugin.showDailyAtTime(
+        5,
+        'Salatul-Isha',
+        'Yā kaw taymanghud, Waktu na sin Sambahayang Isya.',
+        isya,
+        generalNotif);
+  }
+
+  // void _dhuhurNotif() async {
+  //   // var sched = DateTime.now().add(Duration(seconds: 1));
+  //   var sched = new Time(11, 52, 0);
+  //   var androidDetails = new AndroidNotificationDetails(
+  //       'CHANNEL_ID 1', 'CHANNEL_NAME Waktu', 'CHANNEL_DESCRIPTION Salah',
+  //       playSound: true,
+  //       sound: RawResourceAndroidNotificationSound('adhan'),
+  //       importance: Importance.Max);
+  //   var iOSDetails = new IOSNotificationDetails();
+  //   var generalNotif = new NotificationDetails(androidDetails, iOSDetails);
+  //   await flutterLocalNotificationsPlugin.showDailyAtTime(
+  //       1,
+  //       'Salatud-Dhuhri',
+  //       'Yā kaw taymanghud, Waktu na sin Sambahayang Luhur.',
+  //       sched,
+  //       generalNotif);
+  // }
+
+  // void _asrNotif() async {
+  //   // var sched = DateTime.now().add(Duration(seconds: 1));
+  //   var sched = new Time(15, 01, 0);
+  //   var androidDetails = new AndroidNotificationDetails(
+  //       'CHANNEL_ID 1', 'CHANNEL_NAME Waktu', 'CHANNEL_DESCRIPTION Salah',
+  //       playSound: true,
+  //       sound: RawResourceAndroidNotificationSound('adhan'),
+  //       importance: Importance.Max);
+  //   var iOSDetails = new IOSNotificationDetails();
+  //   var generalNotif = new NotificationDetails(androidDetails, iOSDetails);
+  //   await flutterLocalNotificationsPlugin.showDailyAtTime(
+  //       1,
+  //       'Salatul-Asr',
+  //       'Yā kaw taymanghud, Waktu na sin Sambahayang Asar.',
+  //       sched,
+  //       generalNotif);
+  // }
+
+  // void _maghribNotif() async {
+  //   // var sched = DateTime.now().add(Duration(seconds: 1));
+  //   var sched = new Time(18, 00, 0);
+  //   var androidDetails = new AndroidNotificationDetails(
+  //       'CHANNEL_ID 1', 'CHANNEL_NAME Waktu', 'CHANNEL_DESCRIPTION Salah',
+  //       playSound: true,
+  //       sound: RawResourceAndroidNotificationSound('adhan'),
+  //       importance: Importance.Max);
+  //   var iOSDetails = new IOSNotificationDetails();
+  //   var generalNotif = new NotificationDetails(androidDetails, iOSDetails);
+  //   await flutterLocalNotificationsPlugin.showDailyAtTime(
+  //       1,
+  //       'Salatul-Maghrib',
+  //       'Yā kaw taymanghud, Waktu na sin Sambahayang Maghrib.',
+  //       sched,
+  //       generalNotif);
+  // }
+
+  // void _ishaNotif() async {
+  //   // var sched = DateTime.now().add(Duration(seconds: 1));
+  //   var sched = new Time(19, 07, 0);
+  //   var androidDetails = new AndroidNotificationDetails(
+  //       'CHANNEL_ID 1', 'CHANNEL_NAME Waktu', 'CHANNEL_DESCRIPTION Salah',
+  //       playSound: true,
+  //       sound: RawResourceAndroidNotificationSound('adhan'),
+  //       importance: Importance.Max);
+  //   var iOSDetails = new IOSNotificationDetails();
+  //   var generalNotif = new NotificationDetails(androidDetails, iOSDetails);
+  //   await flutterLocalNotificationsPlugin.showDailyAtTime(
+  //       1,
+  //       'Salatul-Isha',
+  //       'Yā kaw taymanghud, Waktu na sin Sambahayang Isya.',
+  //       sched,
+  //       generalNotif);
+  // }
 
   Future<LocationData> getLocationData() async {
     var _serviceEnabled = await location.serviceEnabled();
@@ -63,6 +198,27 @@ class _WaktuState extends State<Waktu> {
 
     return await location.getLocation();
   }
+
+  // Future<void> scheduleNotification() async {
+  //   var now = DateTime.now();
+  //   var androidDetails = new AndroidNotificationDetails(
+  //       'Channel ID', 'Waktu', 'Salah',
+  //       playSound: true,
+  //       sound: RawResourceAndroidNotificationSound('adhan'),
+  //       importance: Importance.Max);
+  //   var iOSDetails = new IOSNotificationDetails();
+  //   var generalNotif = new NotificationDetails(androidDetails, iOSDetails);
+  //   var sched = DateTime.now().add(Duration(seconds: 1));
+  //   if (DateFormat.jm().format(now) ==
+  //       DateFormat.jm().format(prayerTimes.fajr)) {
+  //     await flutterLocalNotificationsPlugin.schedule(
+  //         1,
+  //         'Salatul-Maghrib',
+  //         'Yā kaw taymanghud, Waktu na sin Sambahayang Maghrib.',
+  //         sched,
+  //         generalNotif);
+  //   }
+  // }
 
   // Future _showNotif() async {
   //   var androidDetails = new AndroidNotificationDetails(
@@ -88,35 +244,16 @@ class _WaktuState extends State<Waktu> {
     var ui = Provider.of<UI>(context);
     var now = DateTime.now();
 
-    // var androidDetails = new AndroidNotificationDetails(
-    //     'Channel ID', 'Waktu', 'Salah',
-    //     playSound: true,
-    //     sound: RawResourceAndroidNotificationSound('adhan'),
-    //     importance: Importance.Max);
-    // var iOSDetails = new IOSNotificationDetails();
-    // var generalNotif = new NotificationDetails(androidDetails, iOSDetails);
-    // var sched = DateTime.now().add(Duration(seconds: 1));
-    // if (prayerTimes != null) {
-    //   if (DateFormat.jm().format(now) ==
-    //       DateFormat.jm().format(prayerTimes.maghrib)) {
-    //     flutterLocalNotificationsPlugin.schedule(
-    //         1,
-    //         'Salatul-Maghrib',
-    //         'Yā kaw taymanghud, Waktu na sin Sambahayang Maghrib.',
-    //         sched,
-    //         generalNotif);
-    //   }
-
-    //   if (DateFormat.jm().format(now) ==
-    //       DateFormat.jm().format(prayerTimes.isha)) {
-    //     flutterLocalNotificationsPlugin.schedule(
-    //         1,
-    //         'Salatul-Ishā',
-    //         'Yā kaw taymanghud, Waktu na sin Sambahayang Ishā.',
-    //         sched,
-    //         generalNotif);
-    //   }
+    // if (DateFormat.jm().format(now) ==
+    //     DateFormat.jm().format(prayerTimes.isha)) {
+    //   flutterLocalNotificationsPlugin.schedule(
+    //       1,
+    //       'Salatul-Ishā',
+    //       'Yā kaw taymanghud, Waktu na sin Sambahayang Ishā.',
+    //       sched,
+    //       generalNotif);
     // }
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -129,6 +266,19 @@ class _WaktuState extends State<Waktu> {
       body: (Builder(
         builder: (BuildContext context) {
           if (prayerTimes != null) {
+            // DateFormat.jm().format(now) ==
+            //         DateFormat.jm().format(prayerTimes.dhuhr)
+            //     ? _dhuhurNotif()
+            //     : DateFormat.jm().format(now) ==
+            //             DateFormat.jm().format(prayerTimes.asr)
+            //         ? _asrNotif()
+            //         : DateFormat.jm().format(now) ==
+            //                 DateFormat.jm().format(prayerTimes.maghrib)
+            //             ? _maghribNotif()
+            //             : DateFormat.jm().format(now) ==
+            //                     DateFormat.jm().format(prayerTimes.isha)
+            //                 ? _ishaNotif()
+            //                 : null;
             return Column(
               children: [
                 DateFormat.jm().format(now) ==
@@ -142,7 +292,7 @@ class _WaktuState extends State<Waktu> {
                                 AssetImage('images/Waktu_Fajr.png'),
                           ),
                           title: Text(
-                            'Fajr / الفجر',
+                            'Fajr',
                             style: TextStyle(
                               fontFamily: 'Arabic',
                               fontSize: ui.fontSize,

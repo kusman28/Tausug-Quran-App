@@ -37,6 +37,7 @@ dependencies:
   location: ^3.2.4
   intl: ^0.16.1
   flutter_local_notifications: ^1.4.4+2
+  introduction_screen: ^1.0.9
 
 
   floor: any
@@ -72,6 +73,7 @@ flutter:
   assets:
     - images/
     - surah/
+    - data/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
