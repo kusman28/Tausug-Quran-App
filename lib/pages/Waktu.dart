@@ -35,6 +35,7 @@ class _WaktuState extends State<Waktu> {
               Coordinates(locationData.latitude, locationData.longitude),
               DateComponents.from(DateTime.now()),
               CalculationMethod.muslim_world_league.getParameters());
+          _salahNotif();
         });
       } else {
         setState(() {
@@ -46,23 +47,24 @@ class _WaktuState extends State<Waktu> {
     // _dhuhurNotif();
     // _asrNotif();
     // _maghribNotif();
-    _salahNotif();
+    //
+    // if (prayerTimes != null) {}
     super.initState();
   }
 
   void _salahNotif() async {
     // var wew = DateFormat.jm().format(prayerTimes.asr);
     // DateFormat('h:mm:ss').format(prayerTimes.fajr);
-    var subuh = new Time(prayerTimes.fajr.hour, prayerTimes.fajr.minute,
-        prayerTimes.fajr.second);
-    var luhur = new Time(prayerTimes.dhuhr.hour, prayerTimes.dhuhr.minute,
-        prayerTimes.dhuhr.second);
-    var asar = new Time(
-        prayerTimes.asr.hour, prayerTimes.asr.minute, prayerTimes.asr.second);
-    var maghrib = new Time(prayerTimes.maghrib.hour, prayerTimes.maghrib.minute,
-        prayerTimes.maghrib.second);
-    var isya = new Time(prayerTimes.isha.hour, prayerTimes.isha.minute,
-        prayerTimes.isha.second);
+    // var subuh = new Time(prayerTimes.fajr.hour, prayerTimes.fajr.minute,
+    //     prayerTimes.fajr.second);
+    // var luhur = new Time(prayerTimes.dhuhr.hour, prayerTimes.dhuhr.minute,
+    //     prayerTimes.dhuhr.second);
+    // var asar = new Time(
+    //     prayerTimes.asr.hour, prayerTimes.asr.minute, prayerTimes.asr.second);
+    // var maghrib = new Time(prayerTimes.maghrib.hour, prayerTimes.maghrib.minute,
+    //     prayerTimes.maghrib.second);
+    // var isya = new Time(prayerTimes.isha.hour, prayerTimes.isha.minute,
+    //     prayerTimes.isha.second);
 
     var androidDetails = new AndroidNotificationDetails('1', 'Waktu', 'Salah',
         playSound: true,
@@ -75,35 +77,40 @@ class _WaktuState extends State<Waktu> {
         1,
         'Salatul-Fajr',
         'Yā kaw taymanghud, Waktu na sin Sambahayang Subuh.',
-        subuh,
+        new Time(prayerTimes.fajr.hour, prayerTimes.fajr.minute,
+            prayerTimes.fajr.second),
         generalNotif);
 
     await flutterLocalNotificationsPlugin.showDailyAtTime(
         2,
         'Salatud-Dhuhr',
         'Yā kaw taymanghud, Waktu na sin Sambahayang Luhur.',
-        luhur,
+        new Time(prayerTimes.dhuhr.hour, prayerTimes.dhuhr.minute,
+            prayerTimes.dhuhr.second),
         generalNotif);
 
     await flutterLocalNotificationsPlugin.showDailyAtTime(
         3,
         'Salatul-Asr',
         'Yā kaw taymanghud, Waktu na sin Sambahayang Asar.',
-        asar,
+        new Time(prayerTimes.asr.hour, prayerTimes.asr.minute,
+            prayerTimes.asr.second),
         generalNotif);
 
     await flutterLocalNotificationsPlugin.showDailyAtTime(
         4,
         'Salatul-Maghrib',
         'Yā kaw taymanghud, Waktu na sin Sambahayang Maghrib.',
-        maghrib,
+        new Time(prayerTimes.maghrib.hour, prayerTimes.maghrib.minute,
+            prayerTimes.maghrib.second),
         generalNotif);
 
     await flutterLocalNotificationsPlugin.showDailyAtTime(
         5,
         'Salatul-Isha',
         'Yā kaw taymanghud, Waktu na sin Sambahayang Isya.',
-        isya,
+        new Time(prayerTimes.isha.hour, prayerTimes.isha.minute,
+            prayerTimes.isha.second),
         generalNotif);
   }
 
