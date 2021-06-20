@@ -33,5 +33,12 @@
         "masjid": "Lanjang",
         "lat": 6.9532783,
         "long":  121.9602644
+    },
+    {
+        "city": "Zamboanga",
+        "location": "Tabu",
+        "masjid": "Zambagora",
+        "lat": 6.9009172,
+        "long":  122.0788009
     }
 ]

@@ -12,15 +12,26 @@ import 'package:provider/provider.dart';
 import 'package:tausug_tafseer/style/UI.dart';
 import 'package:flutter/services.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:http/http.dart' as http;
+
+const String SETTINGS_BOX = "settings";
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
 void main() async {
+  // Hive DB
+  await Hive.initFlutter();
+  await Hive.openBox(SETTINGS_BOX);
+
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => UI()),
   ], child: MyApp()));
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Local Notification
   var initializationSettingsAndroid = AndroidInitializationSettings('logo_nav');
   var initializationSettingsIOS = IOSInitializationSettings(
       requestAlertPermission: true,
@@ -56,12 +67,30 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.green,
         primaryColor: Color(hexColor('#216353')),
       ),
-      home: new OnBoardingPage(),
+      home: new MainScreen(),
       initialRoute: '/',
       routes: {
         '/Homepage': (context) => Homepage(),
         '/Qiblah': (context) => Qiblah()
       },
+    );
+  }
+}
+
+class MainScreen extends StatelessWidget {
+  const MainScreen({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    print(Hive.box(SETTINGS_BOX).get("welcome_shown"));
+    return ValueListenableBuilder(
+      valueListenable: Hive.box(SETTINGS_BOX).listenable(),
+      builder: (context, box, child) =>
+          box.get('welcome_shown', defaultValue: false)
+              ? Homepage()
+              : OnBoardingPage(),
     );
   }
 }
@@ -164,7 +193,13 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       nextFlex: 0,
       skip: const Text('Skip'),
       next: const Icon(Icons.arrow_forward),
-      done: const Text('Done', style: TextStyle(fontWeight: FontWeight.w600)),
+      done: GestureDetector(
+          onTap: () async {
+            var box = Hive.box(SETTINGS_BOX);
+            box.put("welcome_shown", true);
+          },
+          child: const Text('Done',
+              style: TextStyle(fontWeight: FontWeight.w600))),
       dotsDecorator: const DotsDecorator(
         size: Size(7.0, 7.0),
         color: Color(0xFFBDBDBD),
