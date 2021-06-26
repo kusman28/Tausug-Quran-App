@@ -17,6 +17,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 
 const String SETTINGS_BOX = "settings";
+const String API_BOX = "api_data";
+const String FAVORITE_BOX = "favorites_box";
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -25,6 +27,8 @@ void main() async {
   // Hive DB
   await Hive.initFlutter();
   await Hive.openBox(SETTINGS_BOX);
+  await Hive.openBox(API_BOX);
+  await Hive.openBox(FAVORITE_BOX);
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => UI()),
@@ -89,7 +93,7 @@ class MainScreen extends StatelessWidget {
       valueListenable: Hive.box(SETTINGS_BOX).listenable(),
       builder: (context, box, child) =>
           box.get('welcome_shown', defaultValue: false)
-              ? Homepage()
+              ? SplashScreen()
               : OnBoardingPage(),
     );
   }

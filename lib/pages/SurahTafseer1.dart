@@ -53,14 +53,13 @@ class _SurahTafseerState extends State<SurahTafseer> {
 
   AppBar buildAppBar(BuildContext context) {
     return new AppBar(
-        centerTitle: true,
         title: Column(
           children: <Widget>[
             Text(widget.detail),
             Text(
               widget.tafsir,
               style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 13,
                   fontFamily: 'Arabic',
                   color: Color(hexColor('d9e4dd'))),
             )
@@ -163,7 +162,6 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                 // var myDatabase = Provider.of<DBHelper>(context);
 
                                 var surah = snapshot.data;
-                                print(widget);
                                 // new Image.asset('images/basmalah.png');
                                 // Container(
                                 //     height: 40,
@@ -180,7 +178,7 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                         Hive.box(FAVORITE_BOX).listenable(),
                                     // ignore: missing_return
                                     builder: (context, box, _) {
-                                      return ListView(children: <Widget>[
+                                      ListView(children: <Widget>[
                                         Container(
                                           height: 50,
                                           color: Colors.grey[800],
@@ -226,28 +224,28 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                                     snapshot.data.text.length,
                                                 itemBuilder:
                                                     (BuildContext c, int i) {
-                                                  var key = snapshot
+                                                  String key = snapshot
                                                       .data.text.keys
                                                       .elementAt(i);
-                                                  print(snapshot.data.number);
-                                                  // bool _isFavorited = true;
-                                                  // void _toggleFavorite() {
-                                                  //   setState(() {
-                                                  //     if (_isFavorited) {
-                                                  //       Bookmarks e = Bookmarks(
-                                                  //           null,
-                                                  //           snapshot.data
-                                                  //               .text[key]);
-                                                  //       DBHelper.ddb.save(e);
-                                                  //       print(i);
-                                                  //       _isFavorited = false;
-                                                  //     } else {
-                                                  //       // DBHelper.ddb.delete(ayat.id);
-                                                  //       print(i);
-                                                  //       _isFavorited = true;
-                                                  //     }
-                                                  //   });
-                                                  // }
+
+                                                  bool _isFavorited = true;
+                                                  void _toggleFavorite() {
+                                                    setState(() {
+                                                      if (_isFavorited) {
+                                                        Bookmarks e = Bookmarks(
+                                                            null,
+                                                            snapshot.data
+                                                                .text[key]);
+                                                        DBHelper.ddb.save(e);
+                                                        print(i);
+                                                        _isFavorited = false;
+                                                      } else {
+                                                        // DBHelper.ddb.delete(ayat.id);
+                                                        print(i);
+                                                        _isFavorited = true;
+                                                      }
+                                                    });
+                                                  }
 
                                                   return Padding(
                                                     // padding: const EdgeInsets.fromLTRB(18, 10, 15, 10),
@@ -365,7 +363,7 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                                                       .showSnackBar(
                                                                           SnackBar(
                                                                     content: Text(
-                                                                        'Copied to Clipboard.'),
+                                                                        'Tafsir Copied'),
                                                                     backgroundColor:
                                                                         Color(hexColor(
                                                                             '#373a40')),
@@ -381,90 +379,58 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                                                           .grey[
                                                                       300]),
                                                             ),
-                                                            IconButton(
-                                                              icon: Icon(box.containsKey(
-                                                                      surah.number +
-                                                                          key)
-                                                                  ? Icons
-                                                                      .bookmark
-                                                                  : Icons
-                                                                      .bookmark_border),
-                                                              color: Color(
-                                                                  hexColor(
-                                                                      '#216353')),
-                                                              onPressed: () {
-                                                                if (box.containsKey(
-                                                                    surah.number +
-                                                                        key)) {
-                                                                  box.delete(
-                                                                      surah.number +
-                                                                          key);
-                                                                } else {
-                                                                  box.put(
-                                                                      surah.number +
-                                                                          key,
-                                                                      surah.text[
-                                                                              key] +
-                                                                          '\n' +
-                                                                          surah
-                                                                              .translations
-                                                                              .id
-                                                                              .text[key]);
-                                                                }
-                                                              },
-                                                            ),
                                                             // _pangindananBtn()
-                                                            // IconButton(
-                                                            //   icon: new Icon(
-                                                            //     Icons
-                                                            //         .bookmark_border,
-                                                            //     color:
-                                                            //         Colors.grey,
-                                                            //   ),
-                                                            //   // icon: (_isFavorited
-                                                            //   //     ? Icon(Icons.bookmark_border)
-                                                            //   //     : Icon(Icons.bookmark)),
-                                                            //   // color: Colors.blue[500],
-                                                            //   // icon: Icon(
-                                                            //   //   i != null &&
-                                                            //   //           i ==
-                                                            //   //               snapshot.data.translations
-                                                            //   //                   .id.text[key]
-                                                            //   //       ? Icons.bookmark
-                                                            //   //       : Icons.bookmark_border,
-                                                            //   //   color: i != null &&
-                                                            //   //           i ==
-                                                            //   //               snapshot.data.translations
-                                                            //   //                   .id.text[key]
-                                                            //   //       ? Colors.blue
-                                                            //   //       : Colors.grey,
-                                                            //   // ),
-                                                            //   // onPressed:
-                                                            //       // _toggleFavorite,
-                                                            //   // onPressed: () {
-                                                            //   //   _onSelected(
-                                                            //   //       snapshot, key);
-                                                            //   //   // Bookmarks e = Bookmarks(
-                                                            //   //   //     i, snapshot.data.text[key]);
-                                                            //   //   // DBHelper.ddb.save(e);
-                                                            //   //   print(i);
+                                                            IconButton(
+                                                              icon: new Icon(
+                                                                Icons
+                                                                    .bookmark_border,
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                              // icon: (_isFavorited
+                                                              //     ? Icon(Icons.bookmark_border)
+                                                              //     : Icon(Icons.bookmark)),
+                                                              // color: Colors.blue[500],
+                                                              // icon: Icon(
+                                                              //   i != null &&
+                                                              //           i ==
+                                                              //               snapshot.data.translations
+                                                              //                   .id.text[key]
+                                                              //       ? Icons.bookmark
+                                                              //       : Icons.bookmark_border,
+                                                              //   color: i != null &&
+                                                              //           i ==
+                                                              //               snapshot.data.translations
+                                                              //                   .id.text[key]
+                                                              //       ? Colors.blue
+                                                              //       : Colors.grey,
+                                                              // ),
+                                                              onPressed:
+                                                                  _toggleFavorite,
+                                                              // onPressed: () {
+                                                              //   _onSelected(
+                                                              //       snapshot, key);
+                                                              //   // Bookmarks e = Bookmarks(
+                                                              //   //     i, snapshot.data.text[key]);
+                                                              //   // DBHelper.ddb.save(e);
+                                                              //   print(i);
 
-                                                            //   //   // setState(() {});
+                                                              //   // setState(() {});
 
-                                                            //   //   _scaffoldKey.currentState
-                                                            //   //       .showSnackBar(
-                                                            //   //           SnackBar(
-                                                            //   //     content: Text(
-                                                            //   //         'Added to Pangindanan'),
-                                                            //   //     backgroundColor: Color(
-                                                            //   //         hexColor(
-                                                            //   //             '#373a40')),
-                                                            //   //     duration: Duration(
-                                                            //   //         seconds: 1),
-                                                            //   //   ));
-                                                            //   // }
-                                                            //   // ),
-                                                            // )
+                                                              //   _scaffoldKey.currentState
+                                                              //       .showSnackBar(
+                                                              //           SnackBar(
+                                                              //     content: Text(
+                                                              //         'Added to Pangindanan'),
+                                                              //     backgroundColor: Color(
+                                                              //         hexColor(
+                                                              //             '#373a40')),
+                                                              //     duration: Duration(
+                                                              //         seconds: 1),
+                                                              //   ));
+                                                              // }
+                                                              // ),
+                                                            )
                                                           ],
                                                         ),
                                                       ],

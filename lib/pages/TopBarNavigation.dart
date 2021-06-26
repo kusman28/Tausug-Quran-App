@@ -106,11 +106,14 @@ class _MoreFeaturesState extends State<MoreFeatures> {
           context: context,
           builder: (context) => new AlertDialog(
             title: new Text('Siguru na kaw?'),
-            content: new Text('Mabaya mu i-exit in Tausug Quran'),
+            content: new Text('Mabaya mu tambulun in \nTausug Quran App.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: new Text('Ayaw'),
+                child: new Text(
+                  'Di`',
+                  style: TextStyle(color: Colors.grey[600]),
+                ),
               ),
               TextButton(
                 onPressed: () => SystemNavigator.pop(),
