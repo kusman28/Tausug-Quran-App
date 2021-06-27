@@ -6,10 +6,6 @@ import 'package:tausug_tafseer/controllers/DBHelper.dart';
 import 'package:tausug_tafseer/controllers/Pangindanan.dart';
 import 'package:provider/provider.dart';
 import 'package:tausug_tafseer/style/UI.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-
-const String FAVORITE_BOX = "favorites_box";
 
 class Pangindanan extends StatefulWidget {
   @override
@@ -29,38 +25,49 @@ class _PangindananState extends State<Pangindanan> {
   Widget build(BuildContext context) {
     var ui = Provider.of<UI>(context);
     return Scaffold(
-      body: ValueListenableBuilder(
-          valueListenable: Hive.box(FAVORITE_BOX).listenable(),
-          // stream: myDatabase.getEmployees().asStream(),
-          builder: (context, box, child) {
-            List posts = List.from(box.values);
-            return ListView(
-              padding: const EdgeInsets.all(16.0),
-              children: <Widget>[
-                // Text("This is a home page"),
-                ...posts.map((p) => ListTile(
+      body: FutureBuilder<List<Bookmarks>>(
+        future: DBHelper.ddb.getPangindanan(),
+        // stream: myDatabase.getEmployees().asStream(),
+        builder: (context, AsyncSnapshot<List<Bookmarks>> snapshot) {
+          return snapshot.hasData
+              ? ListView.separated(
+                  separatorBuilder: (context, index) => Divider(
+                        color: Colors.grey,
+                      ),
+                  itemCount: snapshot.data?.length,
+                  itemBuilder: (_, index) {
+                    Bookmarks ayat = snapshot.data[index];
+
+                    return ListTile(
                       title: Text(
-                        p,
+                        snapshot.data[index].ayat,
                         style: TextStyle(
                           fontFamily: 'Arabic',
                           fontSize: ui.fontSize,
-                          height: 1.0,
+                          height: 1.5,
                         ),
                       ),
-                      // subtitle: Text(p.replaceAll("\n", p)),
-                      // trailing: IconButton(
-                      //   icon: Icon(Icons.delete),
-                      //   onPressed: () {
-                      //     box.delete(p.id);
-                      //   },
+                      // subtitle: Text(
+                      //   snapshot.data[index].ayat,
                       // ),
+                      trailing: IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () {
+                            DBHelper.ddb.delete(ayat.id);
+                            setState(() => {});
+                          }),
                       onTap: () {
-                        //
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) =>
+                        //             Test(ayat.id)));
                       },
-                    )),
-              ],
-            );
-          }),
+                    );
+                  })
+              : Center(child: CircularProgressIndicator());
+        },
+      ),
     );
   }
 }

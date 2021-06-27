@@ -3,8 +3,11 @@
 // sarta tarbilanga kami dayng ha mga Mukhliseen. Ameen
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:hive/hive.dart';
 import 'package:tausug_tafseer/models/Surah.dart';
 import 'package:tausug_tafseer/models/SurahTafseer.dart';
+
+import '../main.dart';
 
 class ServiceData {
   var mgaSurah = 'surah/surah.json';
@@ -21,4 +24,16 @@ class ServiceData {
     var data = res['$number'];
     return AllSurah.fromJson(data);
   }
+
+  // Future getSurahTafsir(int number) async {
+  //   final surahs = Hive.box(API_BOX).get('surahs', defaultValue: []);
+  //   if (surahs.isNotEmpty) return surahs;
+  //   // final http.Response res =
+  //   //     await http.get('https://jsonplaceholder.typicode.com/posts');
+  //   final res = await rootBundle.loadString('surah/$number.json');
+  //   final resjson = json.decode(res);
+  //   var data = resjson['$number'];
+  //   Hive.box(API_BOX).put("surahs", data);
+  //   return AllSurah.fromJson(data);
+  // }
 }

@@ -53,13 +53,14 @@ class _SurahTafseerState extends State<SurahTafseer> {
 
   AppBar buildAppBar(BuildContext context) {
     return new AppBar(
+        centerTitle: true,
         title: Column(
           children: <Widget>[
             Text(widget.detail),
             Text(
               widget.tafsir,
               style: TextStyle(
-                  fontSize: 13,
+                  fontSize: 14,
                   fontFamily: 'Arabic',
                   color: Color(hexColor('d9e4dd'))),
             )
@@ -162,6 +163,7 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                 // var myDatabase = Provider.of<DBHelper>(context);
 
                                 var surah = snapshot.data;
+                                print(widget);
                                 // new Image.asset('images/basmalah.png');
                                 // Container(
                                 //     height: 40,
@@ -178,7 +180,7 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                         Hive.box(FAVORITE_BOX).listenable(),
                                     // ignore: missing_return
                                     builder: (context, box, _) {
-                                      ListView(children: <Widget>[
+                                      return ListView(children: <Widget>[
                                         Container(
                                           height: 50,
                                           color: Colors.grey[800],
@@ -224,10 +226,10 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                                     snapshot.data.text.length,
                                                 itemBuilder:
                                                     (BuildContext c, int i) {
-                                                  String key = snapshot
+                                                  var key = snapshot
                                                       .data.text.keys
                                                       .elementAt(i);
-
+                                                  print(snapshot.data.number);
                                                   bool _isFavorited = true;
                                                   void _toggleFavorite() {
                                                     setState(() {
@@ -324,23 +326,23 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                                               MainAxisAlignment
                                                                   .end,
                                                           children: <Widget>[
-                                                            IconButton(
-                                                              icon: new Icon(Icons
-                                                                  .info_outline),
-                                                              color:
-                                                                  Colors.grey,
-                                                              onPressed: () =>
-                                                                  _onButtonPressed(
-                                                                      snapshot,
-                                                                      key),
-                                                            ),
-                                                            Text(
-                                                              '|',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                          .grey[
-                                                                      300]),
-                                                            ),
+                                                            // IconButton(
+                                                            //   icon: new Icon(Icons
+                                                            //       .info_outline),
+                                                            //   color:
+                                                            //       Colors.grey,
+                                                            //   onPressed: () =>
+                                                            //       _onButtonPressed(
+                                                            //           snapshot,
+                                                            //           key),
+                                                            // ),
+                                                            // Text(
+                                                            //   '|',
+                                                            //   style: TextStyle(
+                                                            //       color: Colors
+                                                            //               .grey[
+                                                            //           300]),
+                                                            // ),
 
                                                             IconButton(
                                                                 icon: new Icon(Icons
@@ -363,7 +365,7 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                                                       .showSnackBar(
                                                                           SnackBar(
                                                                     content: Text(
-                                                                        'Tafsir Copied'),
+                                                                        'Copied to Clipboard.'),
                                                                     backgroundColor:
                                                                         Color(hexColor(
                                                                             '#373a40')),
@@ -379,6 +381,33 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                                                           .grey[
                                                                       300]),
                                                             ),
+                                                            // IconButton(
+                                                            //   icon: Icon(box.containsKey(
+                                                            //           surah.number +
+                                                            //               key)
+                                                            //       ? Icons
+                                                            //           .bookmark
+                                                            //       : Icons
+                                                            //           .bookmark_border),
+                                                            //   color: Color(
+                                                            //       hexColor(
+                                                            //           '#216353')),
+                                                            //   onPressed: () {
+                                                            //     if (box.containsKey(
+                                                            //         surah.number +
+                                                            //             key)) {
+                                                            //       box.delete(
+                                                            //           surah.number +
+                                                            //               key);
+                                                            //     } else {
+                                                            //       box.put(
+                                                            //           surah.number +
+                                                            //               key,
+                                                            //           surah.text[
+                                                            //               key]);
+                                                            //     }
+                                                            //   },
+                                                            // ),
                                                             // _pangindananBtn()
                                                             IconButton(
                                                               icon: new Icon(
@@ -417,19 +446,19 @@ class _SurahTafseerState extends State<SurahTafseer> {
 
                                                               //   // setState(() {});
 
-                                                              //   _scaffoldKey.currentState
-                                                              //       .showSnackBar(
-                                                              //           SnackBar(
-                                                              //     content: Text(
-                                                              //         'Added to Pangindanan'),
-                                                              //     backgroundColor: Color(
-                                                              //         hexColor(
-                                                              //             '#373a40')),
-                                                              //     duration: Duration(
-                                                              //         seconds: 1),
-                                                              //   ));
-                                                              // }
-                                                              // ),
+                                                              //   //   _scaffoldKey.currentState
+                                                              //   //       .showSnackBar(
+                                                              //   //           SnackBar(
+                                                              //   //     content: Text(
+                                                              //   //         'Added to Pangindanan'),
+                                                              //   //     backgroundColor: Color(
+                                                              //   //         hexColor(
+                                                              //   //             '#373a40')),
+                                                              //   //     duration: Duration(
+                                                              //   //         seconds: 1),
+                                                              //   //   ));
+                                                              //   // }
+                                                              //   // ),
                                                             )
                                                           ],
                                                         ),
