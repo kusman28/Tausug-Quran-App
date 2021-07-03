@@ -212,14 +212,18 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                               ),
                                           itemCount: snapshot.data.text.length,
                                           itemBuilder: (BuildContext c, int i) {
-                                            String key = snapshot.data.text.keys
+                                            var myInt = int.parse(snapshot
+                                                .data.text.keys
+                                                .elementAt(i));
+                                            var key = snapshot.data.text.keys
                                                 .elementAt(i);
+                                            print(myInt);
 
                                             bool _isFavorited = true;
                                             void _toggleFavorite() {
                                               // setState(() {
                                               if (_isFavorited) {
-                                                Bookmarks e = Bookmarks(null,
+                                                Bookmarks e = Bookmarks(myInt,
                                                     snapshot.data.text[key]);
                                                 DBHelper.ddb.save(e);
                                                 print(i);

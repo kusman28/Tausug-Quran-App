@@ -12,7 +12,7 @@ String allSurahToJson(List<Map<String, AllSurah>> data) =>
         Map.from(x).map((k, v) => MapEntry<String, dynamic>(k, v.toJson())))));
 
 class AllSurah {
-  String number;
+  int number;
   String name;
   String nameLatin;
   String basmalah;

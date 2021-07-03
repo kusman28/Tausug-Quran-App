@@ -40,9 +40,13 @@ class DBHelper {
   }
 
   Future<Bookmarks> save(Bookmarks pangindanan) async {
-    var dbClient = await db;
-    pangindanan.id = await dbClient.insert(TABLE, pangindanan.toMap());
-    return pangindanan;
+    try {
+      var dbClient = await db;
+      pangindanan.id = await dbClient.insert(TABLE, pangindanan.toMap());
+      return pangindanan;
+    } catch (e) {
+      delete(pangindanan.id);
+    }
     /*
     await dbClient.transaction((txn) async {
       var query = "INSERT INTO $TABLE ($NAME) VALUES ('" + employee.name + "')";

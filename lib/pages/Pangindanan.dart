@@ -37,7 +37,7 @@ class _PangindananState extends State<Pangindanan> {
                   itemCount: snapshot.data?.length,
                   itemBuilder: (_, index) {
                     Bookmarks ayat = snapshot.data[index];
-
+                    print(ayat.id);
                     return ListTile(
                       title: Text(
                         snapshot.data[index].ayat,
