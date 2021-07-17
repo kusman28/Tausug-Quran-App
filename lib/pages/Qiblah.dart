@@ -3,8 +3,12 @@
 // sarta tarbilanga kami dayng ha mga Mukhliseen. Ameen
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
-import 'package:flutter_compass/flutter_compass.dart';
+// import 'package:flutter_compass/flutter_compass.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_qiblah/flutter_qiblah.dart';
+import 'package:tausug_tafseer/style/loading_indicator.dart';
+import 'package:tausug_tafseer/style/qiblah_compass.dart';
+import 'package:tausug_tafseer/style/qiblah_maps.dart';
 
 class Qiblah extends StatefulWidget {
   @override
@@ -12,6 +16,7 @@ class Qiblah extends StatefulWidget {
 }
 
 class _QiblahState extends State<Qiblah> {
+  final _deviceSupport = FlutterQiblah.androidDeviceSensorSupport();
   bool _hasPermissions = false;
   double _lastRead = 0;
   DateTime _lastReadAt;
@@ -41,115 +46,21 @@ class _QiblahState extends State<Qiblah> {
           onPressed: () => Navigator.pushReplacementNamed(context, '/Homepage'),
         ),
       ),
-      body: Builder(builder: (context) {
-        if (_hasPermissions) {
-          return Column(
-            children: <Widget>[
-              _buildManualReader(),
-              Expanded(child: _buildCompass()),
-            ],
-          );
-        } else {
-          return _buildPermissionSheet();
-        }
-      }),
-    );
-  }
+      body: FutureBuilder(
+        future: _deviceSupport,
+        builder: (_, AsyncSnapshot<bool> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting)
+            return LoadingIndicator();
+          if (snapshot.hasError)
+            return Center(
+              child: Text("Error: ${snapshot.error.toString()}"),
+            );
 
-  Widget _buildManualReader() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
-        children: <Widget>[
-          OutlineButton(
-            child: Text('See Coordinates'),
-            onPressed: () async {
-              final double tmp = await FlutterCompass.events.first;
-              setState(() {
-                _lastRead = tmp;
-                _lastReadAt = DateTime.now();
-              });
-            },
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Text(
-                  '$_lastRead',
-                  style: Theme.of(context).textTheme.caption,
-                ),
-                Text(
-                  '${_lastReadAt ?? 'No Data'}',
-                  style: Theme.of(context).textTheme.caption,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCompass() {
-    return StreamBuilder<double>(
-      stream: FlutterCompass.events,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Text('Error reading heading: ${snapshot.error}');
-        }
-
-        if (!snapshot.hasData) {
-          return Center(
-            child: Container(
-              width: 32,
-              height: 32,
-              child: CircularProgressIndicator(),
-            ),
-          );
-        }
-
-        double direction = snapshot.data;
-
-        return Container(
-          alignment: Alignment.center,
-          child: Transform.rotate(
-            angle: ((direction ?? 0) * (math.pi / 180) * -1),
-            child: Image.asset('images/Qiblatun.png'),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildPermissionSheet() {
-    return Container(
-      padding: EdgeInsets.all(20),
-      child: Column(
-        // mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Spacer(),
-          // Text('Location Permission Required'),
-          Text(
-              'In App ini mag-kalagihan tugut dayng kaniyu supaya kaingatan bang hawnu in Qiblah.'),
-          Spacer(),
-          SizedBox(
-            width: double.infinity,
-            child: OutlineButton(
-              child: Text('Request Permission'),
-              onPressed: () async {
-                await Permission.locationWhenInUse
-                    .request()
-                    .isGranted
-                    .then((value) {
-                  setState(() {
-                    _hasPermissions = value;
-                  });
-                });
-              },
-            ),
-          ),
-        ],
+          if (snapshot.data)
+            return QiblahCompass();
+          else
+            return QiblahMaps();
+        },
       ),
     );
   }

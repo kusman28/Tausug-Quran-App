@@ -3,8 +3,10 @@
 // sarta tarbilanga kami dayng ha mga Mukhliseen. Ameen
 import 'dart:async';
 
+import 'package:adhan/adhan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:location/location.dart';
 import 'package:tausug_tafseer/pages/Qiblah.dart';
 import 'package:tausug_tafseer/pages/TopBarNavigation.dart';
 import 'package:tausug_tafseer/style/Hex.dart';
@@ -59,6 +61,55 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final location = new Location();
+
+  String locationError;
+
+  PrayerTimes prayerTimes;
+
+  @override
+  void initState() {
+    getLocationData().then((locationData) {
+      if (!mounted) {
+        return;
+      }
+      if (locationData != null) {
+        setState(() {
+          prayerTimes = PrayerTimes(
+              Coordinates(locationData.latitude, locationData.longitude),
+              DateComponents.from(DateTime.now()),
+              CalculationMethod.karachi.getParameters());
+        });
+      } else {
+        setState(() {
+          locationError = "Couldn't Get Your Location!";
+        });
+      }
+    });
+
+    super.initState();
+  }
+
+  Future<LocationData> getLocationData() async {
+    var _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return null;
+      }
+    }
+
+    var _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return null;
+      }
+    }
+
+    return await location.getLocation();
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(

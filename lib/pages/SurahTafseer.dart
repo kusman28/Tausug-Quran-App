@@ -213,8 +213,9 @@ class _SurahTafseerState extends State<SurahTafseer> {
                                           itemCount: snapshot.data.text.length,
                                           itemBuilder: (BuildContext c, int i) {
                                             var myInt = int.parse(snapshot
-                                                .data.text.keys
-                                                .elementAt(i));
+                                                    .data.text.keys
+                                                    .elementAt(i)) +
+                                                surah.number;
                                             var key = snapshot.data.text.keys
                                                 .elementAt(i);
                                             print(myInt);
