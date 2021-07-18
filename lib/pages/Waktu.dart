@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:tausug_tafseer/style/Hex.dart';
 import 'package:tausug_tafseer/style/UI.dart';
 import 'package:adhan/adhan.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Waktu extends StatefulWidget {
   @override

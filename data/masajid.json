@@ -1,44 +1,51 @@
 [
     {
         "city": "Zamboanga",
+        "location": "Ayala",
+        "masjid": "Blue Homes",
+        "lat": 6.9690954,
+        "long": 121.9433103
+    },
+    {
+        "city": "Zamboanga",
         "location": "Recodo",
         "masjid": "Darus-Salam",
         "lat": 6.954197,
-        "long":  121.9599458
+        "long": 121.9599458
     },
     {
         "city": "Zamboanga",
         "location": "Recodo",
         "masjid": "Lappasan",
         "lat": 6.9548033,
-        "long":  121.9598906
+        "long": 121.9598906
     },
     {
         "city": "Zamboanga",
         "location": "Recodo",
         "masjid": "Kasalamatan",
         "lat": 6.9536097,
-        "long":  121.9603251
+        "long": 121.9603251
     },
     {
         "city": "Zamboanga",
         "location": "Recodo",
         "masjid": "Awwal",
         "lat": 6.9536097,
-        "long":  121.9603251
+        "long": 121.9603251
     },
     {
         "city": "Zamboanga",
         "location": "Recodo",
         "masjid": "Lanjang",
         "lat": 6.9532783,
-        "long":  121.9602644
+        "long": 121.9602644
     },
     {
         "city": "Zamboanga",
         "location": "Tabu",
         "masjid": "Zambagora",
         "lat": 6.9009172,
-        "long":  122.0788009
+        "long": 122.0788009
     }
 ]

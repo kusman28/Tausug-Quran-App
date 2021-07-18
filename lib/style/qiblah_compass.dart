@@ -1,3 +1,6 @@
+// بسم الله الرحمن الرحيم
+// O' Tuhan namu papag-barakata kamu in Application ini
+// sarta tarbilanga kami dayng ha mga Mukhliseen. Ameen
 import 'dart:async';
 import 'dart:math' show pi;
 
@@ -7,6 +10,7 @@ import 'package:tausug_tafseer/style/loading_indicator.dart';
 import 'package:tausug_tafseer/style/location_error_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class QiblahCompass extends StatefulWidget {
   @override
@@ -121,9 +125,31 @@ class QiblahCompassWidget extends StatelessWidget {
               child: _needleSvg,
             ),
             Positioned(
-              bottom: 8,
-              child: Text("${qiblahDirection.offset.toStringAsFixed(3)}°"),
+              top: 10,
+              child: Text(
+                "${qiblahDirection.offset.toStringAsFixed(3)}°",
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+            Positioned(
+                bottom: 8,
+                child: new InkWell(
+                    child: new Text(
+                      'Tausug Quran',
+                      style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          color: Colors.blueAccent),
+                    ),
+                    onTap: () =>
+                        launch('https://www.facebook.com/TausugQuran313'))),
+            Positioned(
+              bottom: 25,
+              child: Text("Qiblah by"),
             )
+            // Positioned(
+            //   bottom: 8,
+            //   child: Text("${qiblahDirection.offset.toStringAsFixed(3)}°"),
+            // )
           ],
         );
       },

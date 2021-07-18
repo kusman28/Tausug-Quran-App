@@ -63,7 +63,7 @@ dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "images/logo_nav.png"
+  image_path: "images/logo_nav1.png"
   
 dev_dependencies:
   flutter_test:

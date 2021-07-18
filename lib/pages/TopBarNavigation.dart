@@ -3,6 +3,7 @@
 // sarta tarbilanga kami dayng ha mga Mukhliseen. Ameen
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tausug_tafseer/pages/About.dart';
 import 'package:tausug_tafseer/pages/Juz.dart';
 import 'package:tausug_tafseer/pages/Masajid.dart';
 import 'package:tausug_tafseer/pages/Pangindanan.dart';
@@ -40,7 +41,7 @@ class _HomepageState extends State<Homepage> {
             leading: Padding(
               padding: const EdgeInsets.all(5.0),
               child: Image.asset(
-                "images/logo_nav.png",
+                "images/logo_nav1.png",
               ),
             ),
             actions: <Widget>[
@@ -215,6 +216,11 @@ class _MoreFeaturesState extends State<MoreFeatures> {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => Masajid()),
+            );
+          } else if (result == MenuFeatures.About) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => About()),
             );
           }
         },

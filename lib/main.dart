@@ -190,7 +190,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           title: "Tausug Quran",
           body: "Maana sin Quran Mahamulliya ha Bahasa Sug.",
           image: Center(
-            child: Image.asset("images/logo_nav.png", height: 175.0),
+            child: Image.asset("images/logo_nav1.png", height: 175.0),
           ),
           decoration: pageDecoration,
         ),
@@ -201,7 +201,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "Masajid",
+          title: "Masājid",
           body: "Ingatun natu' in mga kamasjiran masuuk pa Qawman.",
           image: _buildImage('slider_1'),
           decoration: pageDecoration,
@@ -301,7 +301,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 SizedBox(
                   width: 200,
                   height: 200,
-                  child: Image.asset('images/logo_nav.png'),
+                  child: Image.asset('images/logo_nav1.png'),
                 ),
                 Text(
                   'Tausug Quran\n\n\n\n\n',

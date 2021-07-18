@@ -32,7 +32,7 @@ class Masajid extends StatefulWidget {
 }
 
 class _MasajidState extends State<Masajid> {
-  double currentZoom = 15.0;
+  double currentZoom = 6.0;
   MapController controller = new MapController();
   Position position;
   Widget _child;
@@ -201,7 +201,7 @@ class _MasajidState extends State<Masajid> {
                         point: LatLng(position.latitude, position.longitude),
                         builder: (context) => new Container(
                                 child: Transform.scale(
-                              scale: 1.5,
+                              scale: 1,
                               child: IconButton(
                                 icon: new Icon(Icons.location_on),
                                 color: Colors.blue,
